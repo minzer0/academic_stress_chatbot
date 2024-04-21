@@ -42,7 +42,7 @@ if user_input := st.chat_input():
         
 
     with st.spinner('모니가 입력 중입니다...'):
-        #챗봇 응답 생성
+        #response generation
         response = client.chat.completions.create(
             model=st.session_state["openai_model"], 
             messages=st.session_state.conversation_history,
