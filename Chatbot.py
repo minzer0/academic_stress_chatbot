@@ -98,7 +98,7 @@
 #     # st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
 
 
-pip install --upgrade streamlit
+
 
 from openai import OpenAI
 import streamlit as st
