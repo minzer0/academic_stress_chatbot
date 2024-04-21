@@ -2,13 +2,13 @@ from openai import OpenAI
 import streamlit as st
 
 
-st.title("Career Counseling Chatbot💬")
-st.caption("🚀 AI Career Counselor Conversational Assistant produced by Hyerim")
+st.title("고민모니💬")
+st.caption("🚀 Academic Stress Assessment Chatbot produced by 유박사")
 
 
 # Set a default model
 if "openai_model" not in st.session_state:    
-    st.session_state["openai_model"] = "gpt-4-1106-preview"
+    st.session_state["openai_model"] = "gpt-4-0125-preview"
 
 # Set OpenAI API key 
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'], 
@@ -20,7 +20,7 @@ openai_api_key = st.secrets['OPENAI_API_KEY']
 if "conversation_history" not in st.session_state:    
     st.session_state.conversation_history = [
         {"role": "system", "content": st.secrets['system_prompt']},
-        {"role": "assistant", "content": "안녕하세요! 저는 당신의 AI 진로 상담사입니다. 당신의 이름은 무엇인가요?"}
+        {"role": "assistant", "content": "안녕! 나는 모니라고 해😊"}
     ]
 
 
