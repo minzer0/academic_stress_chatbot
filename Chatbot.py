@@ -2,8 +2,7 @@ from openai import OpenAI
 import streamlit as st
 
 
-#st.title("고민모니🤷‍♂️🤷‍♀️")
-st.markdown("<h1 style='font-family:Nanum Gothic;'>고민모니🤷‍♂️🤷‍♀️</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='font-family:Nanum Gothic;'>모니와 대화하기💭</h1>", unsafe_allow_html=True)
 st.caption("👯 Academic Stress Assessment Chatbot produced by 유박사 👯")
 
 
