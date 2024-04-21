@@ -1,5 +1,6 @@
 from openai import OpenAI
 import streamlit as st
+import pandas as pd
 
 
 st.markdown("<h1 style='font-family:Nanum Gothic;'>모니와 대화하기💭</h1>", unsafe_allow_html=True)
