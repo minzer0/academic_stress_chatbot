@@ -1,6 +1,7 @@
 from openai import OpenAI
 import streamlit as st
 import pandas as pd
+import os
 
 
 st.markdown("<h1 style='font-family:Nanum Gothic;'>모니와 대화하기💭</h1>", unsafe_allow_html=True)
@@ -36,12 +37,11 @@ for message in st.session_state.conversation_history:
  
 if user_input := st.chat_input():    
     #Add user message to chat history
-    #st.session_state.messages.append({"role": "system", "content": system_prompt})
     st.session_state.conversation_history.append({"role": "user", "content": user_input})
     st.chat_message("user").write(user_input)
         
 
-    with st.spinner('Please wait...'):
+    with st.spinner('모니가 입력 중입니다...'):
         #챗봇 응답 생성
         response = client.chat.completions.create(
             model=st.session_state["openai_model"], 
@@ -55,32 +55,43 @@ if user_input := st.chat_input():
         st.session_state.conversation_history.append({"role": "assistant", "content": assistant_reply})
         st.chat_message("assistant").write(assistant_reply)  
 
+        #사용자별 대화 세션 저장
+        if not os.path.exists('user_conv_log.csv'):
+            with open('user_conv_log.csv', mode='w', newline='', encoding='cp949') as file:
+                writer = csv.writer(file)
+                writer.writerow(['user_ip', 'timestamp', 'user_message', 'assistant_message'])
+    
+        user_ip = request.client.host
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+        user_conv_log = [user_ip, timestamp, user_message, assistant_message]
+    
+        # Write user_conv_log to CSV file
+        with open('user_conv_log.csv', mode='a', newline='', encoding='cp949') as file:
+            writer = csv.writer(file)
+            writer.writerow(user_conv_log)
+
 
 # Previous conversation
-CSV_FILE = "chat_history.csv"
-try:
-    chat_history_df = pd.read_csv(CSV_FILE)
-except FileNotFoundError:
-    chat_history_df = pd.DataFrame(columns=["ChatID", "Role", "Content"])
+CSV_FILE = "user_conv_log.csv"
+chat_history_df = pd.read_csv(CSV_FILE)
 
 
-def get_button_label(chat_df, chat_id):
-    first_message = chat_df[(chat_df["ChatID"] == chat_id) & (chat_df["Role"] == "User")].iloc[0]["Content"]
-    return f"Chat {chat_id[0:7]}: {' '.join(first_message.split()[:5])}..."
+# def get_button_label(user_conv_log, user_ip):
+#     first_message = user_conv_log[(user_conv_log["user_ip"] == user_ip) & (user_conv_log["Role"] == "User")].iloc[0]["Content"]
+#     return f"Chat {chat_id[0:7]}: {' '.join(first_message.split()[:5])}..."
 
 
-for chat_id in chat_history_df["ChatID"].unique():
-    button_label = get_button_label(chat_history_df, chat_id)
-    if st.sidebar.button(button_label):
-        current_chat_id = chat_id
-        loaded_chat = chat_history_df[chat_history_df["ChatID"] == chat_id]
-        loaded_chat_string = "\n".join(f"{row['Role']}: {row['Content']}" for _, row in loaded_chat.iterrows())
-        st.text_area("이전 대화 기록 확인하기", value=loaded_chat_string, height=300)
+# for chat_id in chat_history_df["user_ip"].unique():
+#     button_label = get_button_label(chat_history_df, chat_id)
+#     if st.sidebar.button(button_label):
+#         current_chat_id = chat_id
+#         loaded_chat = chat_history_df[chat_history_df["ChatID"] == chat_id]
+#         loaded_chat_string = "\n".join(f"{row['Role']}: {row['Content']}" for _, row in loaded_chat.iterrows())
+#         st.text_area("채팅 기록", value=loaded_chat_string, height=300)
 
-    
-# # Sidber
-# with st.sidebar:
-#     st.sidebar.header('이전 대화 기록 확인하기')
-#     st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
+with st.sidebar:
+    st.sidebar.header('이전 대화 기록 확인하기')
+    st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
 
 
