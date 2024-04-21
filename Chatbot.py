@@ -55,23 +55,31 @@ if user_input := st.chat_input():
         st.chat_message("assistant").write(assistant_reply)  
 
 
-# 대화 로그를 파일에 저장하는 함수
-def save_conversation_to_file(conversation):
-    with open("chat_log.csv", mode='a', newline='', encoding="utf-8") as file:
-        for message in conversation:
-                if message["role"]=='system':
-                    continue
-                file.write(f"{message['role']}: {message['content']}\n")
+# Previous conversation
+CSV_FILE = "chat_history.csv"
+try:
+    chat_history_df = pd.read_csv(CSV_FILE)
+except FileNotFoundError:
+    chat_history_df = pd.DataFrame(columns=["ChatID", "Role", "Content"])
 
 
-# 대화 종료 메시지 감지
-if user_input == "대화 종료":
-    save_conversation_to_file(st.session_state["conversation_history"])  
+def get_button_label(chat_df, chat_id):
+    first_message = chat_df[(chat_df["ChatID"] == chat_id) & (chat_df["Role"] == "User")].iloc[0]["Content"]
+    return f"Chat {chat_id[0:7]}: {' '.join(first_message.split()[:5])}..."
+
+
+for chat_id in chat_history_df["ChatID"].unique():
+    button_label = get_button_label(chat_history_df, chat_id)
+    if st.sidebar.button(button_label):
+        current_chat_id = chat_id
+        loaded_chat = chat_history_df[chat_history_df["ChatID"] == chat_id]
+        loaded_chat_string = "\n".join(f"{row['Role']}: {row['Content']}" for _, row in loaded_chat.iterrows())
+        st.text_area("이전 대화 기록 확인하기", value=loaded_chat_string, height=300)
 
     
-# SIDEBAR 관리
-with st.sidebar:
-    st.sidebar.header('이전 대화 기록 확인하기')
-    st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
+# # Sidber
+# with st.sidebar:
+#     st.sidebar.header('이전 대화 기록 확인하기')
+#     st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
 
 
