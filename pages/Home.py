@@ -6,7 +6,7 @@ if "user_metadata" not in st.session_state:
         st.switch_page("pages/Login.py")
     st.stop()
 
-st.title(f"{st.session_state["user_metadata"]["user_name"][1:]}님의 학업 스트레스 지수")
+st.title(f"{st.session_state['user_metadata']['user_name'][1:]}님의 학업 스트레스 지수")
 
 with st.container(border=True):
     st.markdown("또래 100명 중..")
