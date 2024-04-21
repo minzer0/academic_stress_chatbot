@@ -10,6 +10,7 @@ st.caption("👯 Academic Stress Assessment Chatbot produced by 유박사 👯")
 if "openai_model" not in st.session_state:    
     st.session_state["openai_model"] = "gpt-4-0125-preview"
 
+
 # Set OpenAI API key 
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'], 
                 organization=st.secrets['OPENAI_ORGANIZATION'])
@@ -31,8 +32,6 @@ for message in st.session_state.conversation_history:
     st.chat_message(message["role"]).write(message["content"]) 
     print(message) 
 
-
- 
  
 if user_input := st.chat_input():    
     #Add user message to chat history
@@ -56,8 +55,6 @@ if user_input := st.chat_input():
         st.chat_message("assistant").write(assistant_reply)  
 
 
-
-
 # 대화 로그를 파일에 저장하는 함수
 def save_conversation_to_file(conversation):
     with open("chat_log.csv", mode='a', newline='', encoding="utf-8") as file:
@@ -66,6 +63,7 @@ def save_conversation_to_file(conversation):
                     continue
                 file.write(f"{message['role']}: {message['content']}\n")
 
+
 # 대화 종료 메시지 감지
 if user_input == "대화 종료":
     save_conversation_to_file(st.session_state["conversation_history"])  
@@ -73,10 +71,7 @@ if user_input == "대화 종료":
     
 # SIDEBAR 관리
 with st.sidebar:
-    st.sidebar.header('Career Counseling Chatbot')
-    st.sidebar.markdown('진로 결정 어려움을 해결하여 진로 결정을 잘할 수 있도록 도와주는 AI 진로 상담사')
-    st.sidebar.link_button("Career Decision-making Difficulties Questionnaire", "https://kivunim.huji.ac.il/eng-quest/cddq_nse/cddq_nse_main.html")
+    st.sidebar.header('이전 대화 기록 확인하기')
     st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
-
 
 
