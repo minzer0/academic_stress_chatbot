@@ -99,14 +99,11 @@
 
 
 
-
 from openai import OpenAI
 import streamlit as st
 import pandas as pd
 import os
 import csv  # csv 모듈을 import합니다
-import datetime  # datetime 모듈을 import합니다
-from streamlit.report_thread import get_report_ctx  # get_report_ctx 함수를 import합니다
 
 
 st.markdown("<h1 style='font-family:Nanum Gothic;'>모니와 대화하기💭</h1>", unsafe_allow_html=True)
@@ -155,15 +152,15 @@ if user_input := st.chat_input():
         if not os.path.exists('user_conv_log.csv'):
             with open('user_conv_log.csv', mode='w', newline='', encoding='cp949') as file:
                 writer = csv.writer(file)
-                writer.writerow(['user_ip', 'timestamp', 'user_message', 'assistant_message'])
+                writer.writerow(['session_id', 'timestamp', 'user_message', 'assistant_message'])
+            session_id = 1
+        else:
+            with open('user_conv_log.csv', mode='r', newline='', encoding='cp949') as file:
+                reader = csv.reader(file)
+                session_id = sum(1 for _ in reader)  # 새로운 세션 ID를 할당합니다.
 
-        # request와 datetime 모듈을 사용하여 사용자의 IP 주소와 현재 시간을 가져옵니다.
-        ctx = get_report_ctx()
-        user_ip = ctx.request.client.host
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # 사용자별 대화 세션을 리스트로 만듭니다.
-        user_conv_log = [user_ip, timestamp, user_message, assistant_message]
+        # 대화 세션을 리스트로 만듭니다.
+        user_conv_log = [session_id, user_message, assistant_message]
 
         # Write user_conv_log to CSV file
         with open('user_conv_log.csv', mode='a', newline='', encoding='cp949') as file:
@@ -175,8 +172,7 @@ CSV_FILE = "user_conv_log.csv"
 try:
     chat_history_df = pd.read_csv(CSV_FILE)
 except FileNotFoundError:
-    chat_history_df = pd.DataFrame(columns=['user_ip', 'timestamp', 'user_message', 'assistant_message'])
+    chat_history_df = pd.DataFrame(columns=['session_id', 'user_message', 'assistant_message'])
 
 with st.sidebar:
     st.sidebar.header('이전 대화 기록 확인하기')
-
