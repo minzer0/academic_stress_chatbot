@@ -74,7 +74,10 @@ if user_input := st.chat_input():
 
 # Previous conversation
 CSV_FILE = "user_conv_log.csv"
-chat_history_df = pd.read_csv(CSV_FILE)
+try:
+    chat_history_df = pd.read_csv(CSV_FILE)
+except FileNotFoundError:
+    chat_history_df = pd.DataFrame(columns=['user_ip', 'timestamp', 'user_message', 'assistant_message'])
 
 
 # def get_button_label(user_conv_log, user_ip):
