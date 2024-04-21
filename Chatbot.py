@@ -167,12 +167,12 @@ if user_input := st.chat_input():
             writer = csv.writer(file)
             writer.writerow(user_conv_log)
 
-# Previous conversation
-CSV_FILE = "user_conv_log.csv"
-try:
-    chat_history_df = pd.read_csv(CSV_FILE)
-except FileNotFoundError:
-    chat_history_df = pd.DataFrame(columns=['session_id', 'user_message', 'assistant_message'])
+# # Previous conversation
+# CSV_FILE = "user_conv_log.csv"
+# try:
+#     chat_history_df = pd.read_csv(CSV_FILE)
+# except FileNotFoundError:
+#     chat_history_df = pd.DataFrame(columns=['session_id', 'user_message', 'assistant_message'])
 
 with st.sidebar:
     st.sidebar.header('이전 대화 기록 확인하기')
