@@ -1,1 +1,1 @@
-#academic_stress_chatbot
+고민이 모니
