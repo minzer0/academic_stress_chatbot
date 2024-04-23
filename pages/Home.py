@@ -16,20 +16,20 @@ with st.container(border=True):
 
 col1, col2, col3 = st.columns(3)
 
-# 스트레스 원인
-with col1:
-    st.subheader("스트레스 원인")
-    st.write("\n".join(f"- {cause} {stressor_icons.get(cause, '👌')}" for cause in stressor_icons.keys[:3]))
+# # 스트레스 원인
+# with col1:
+#     st.subheader("스트레스 원인")
+#     st.write("\n".join(f"- {cause} {stressor_icons.get(cause, '👌')}" for cause in stressor_icons.keys[:3]))
 
-# 스트레스 증상
-with col2:
-    st.subheader("스트레스 증상")
-    st.write("\n".join(f"- {symptom} {symptoms_icons.get(symptom, '👌')}" for symptom in symptoms_icons.keys[:3]))
+# # 스트레스 증상
+# with col2:
+#     st.subheader("스트레스 증상")
+#     st.write("\n".join(f"- {symptom} {symptoms_icons.get(symptom, '👌')}" for symptom in symptoms_icons.keys[:3]))
 
-# 스트레스 대처 전략
-with col3:
-    st.subheader("스트레스 대처 전략")
-    st.write("\n".join(f"- {strategy} {coping_icons.get(strategy, '👌')}" for strategy in coping_icons.keys[:3]))
+# # 스트레스 대처 전략
+# with col3:
+#     st.subheader("스트레스 대처 전략")
+#     st.write("\n".join(f"- {strategy} {coping_icons.get(strategy, '👌')}" for strategy in coping_icons.keys[:3]))
 
 
 
