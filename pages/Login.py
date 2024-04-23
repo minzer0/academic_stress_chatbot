@@ -1,4 +1,5 @@
 import streamlit as st
+# from pip import SupabaseConnection
 from st_supabase_connection import SupabaseConnection
 
 
