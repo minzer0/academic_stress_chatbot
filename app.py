@@ -6,7 +6,6 @@ st.set_page_config(
     page_icon = "./images/logo.png"
 )
 
-
 st.image('./images/app_img.png')
 
 
