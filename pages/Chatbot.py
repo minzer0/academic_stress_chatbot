@@ -6,6 +6,20 @@ import os
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 
+########################################################################################
+# SETUP
+
+st.set_page_config(
+    page_title = "고민모니",
+    page_icon = "./images/logo.png"
+)
+
+# .streamlit/style.css 파일 열기
+with open("./.streamlit/style.css") as css:
+    # CSS 파일을 읽어와서 스타일 적용
+    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+
+########################################################################################
 
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
 try:
@@ -25,6 +39,11 @@ user_name = st.session_state["user_metadata"]["user_name"]
 st.markdown("<h1 style='font-family:Nanum Gothic;'>모니와 대화하기💭</h1>", unsafe_allow_html=True)
 st.caption("👯 Academic Stress Assessment Chatbot produced by 유박사 👯")
 
+col1, col2, col3 = st.columns(3)
+with col2:
+    main_button = st.button(label = "🚨   대화 중단하고 메인 화면으로 돌아가기")
+    if main_button:
+        st.switch_page("pages/Home.py")
 
 # Set a default model
 if "openai_model" not in st.session_state:    
