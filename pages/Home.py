@@ -96,7 +96,7 @@ with st.container():
 st.write("#")
 st.write("#")
 
-if st.button(":left_speech_bubble:   모니와 대화하며 **새로운 학업 스트레스 측정**하기",
+if st.button(":left_speech_bubble:   모니와 대화하며 \n **새로운 학업 스트레스 측정**하기",
             use_container_width=True, ):
     st.switch_page("pages/Chatbot.py")
 if st.button(":bar_chart:    이전 기록 확인하기",

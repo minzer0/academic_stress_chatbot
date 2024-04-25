@@ -46,17 +46,15 @@ with st.container(border=True):
             st.error("로그인 실패")
 
 
-col1, col2, col3 = st.columns(3)
-with col2:
-    if st.button("⬅️     시작 화면으로 돌아가기", use_container_width=True):
-        st.switch_page("app.py")
+if st.button("⬅️     시작 화면으로 돌아가기", use_container_width=True):
+    st.switch_page("app.py")
 
 # 회색 배경에 작은 글씨로 중앙 정렬된 캡션 추가
 st.write("#")
 
 st.markdown(
-    "<div style='text-align: center; font-size: small;'>"
-    "👯 본 앱은 서울과학기술대학교 인간중심인공지능 연구실<br>유박사 팀에서 개발한 학업 스트레스 측정 챗봇입니다 👯"
+    "<div style='text-align: center; font-size: 15px;'>"
+    "👯 본 앱은 서울과학기술대학교 인간중심인공지능연구실 유박사 팀에서 개발했습니다 👯"
     "</div>",
     unsafe_allow_html=True
 )
