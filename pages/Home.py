@@ -45,9 +45,6 @@ with st.container(border=True):
     data = np.random.normal(mean, std, n_samples)
     df = pd.DataFrame(data, columns=['score'])
 
-    # 사용자의 점수 설정
-    user_score = 82  # 사용자가 가진 점수 예시
-
     # 히스토그램 생성
     base_histogram = (
         alt.Chart(df)
