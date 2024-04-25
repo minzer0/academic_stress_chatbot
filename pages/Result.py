@@ -1,6 +1,4 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-import numpy as np
 
 from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
