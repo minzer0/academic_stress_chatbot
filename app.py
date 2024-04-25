@@ -52,7 +52,7 @@ st.write("#")
 
 st.markdown(
     "<div style='text-align: center; font-size: 15px;'>"
-    "👯 본 앱은 서울과학기술대학교 인간중심인공지능연구실 유박사 팀에서 개발했습니다 👯"
+    "👯 본 앱은 서울과학기술대학교 HAI LAB 유박사 팀에서 개발했습니다 👯"
     "</div>",
     unsafe_allow_html=True
 )

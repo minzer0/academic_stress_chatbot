@@ -24,7 +24,10 @@ with st.container(border=True):
     
     email = st.text_input("이메일 주소", key="email_login")
     password = st.text_input("비밀번호", type="password", key="password_login")
-    st.button("로그인")
+    
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        st.button("로그인")
     
     if email and password:
         try:
@@ -54,7 +57,7 @@ st.write("#")
 
 st.markdown(
     "<div style='text-align: center; font-size: 15px;'>"
-    "👯 본 앱은 서울과학기술대학교 인간중심인공지능연구실 유박사 팀에서 개발했습니다 👯"
+    "👯 본 앱은 서울과학기술대학교 HAI LAB 유박사 팀에서 개발했습니다 👯"
     "</div>",
     unsafe_allow_html=True
 )
