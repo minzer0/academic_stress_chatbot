@@ -9,7 +9,7 @@ from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
 ########################################################################################
-# SETUP hi
+# SETUP 
 
 # .streamlit/style.css 파일 열기
 with open("./.streamlit/style.css") as css:
