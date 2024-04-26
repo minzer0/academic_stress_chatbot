@@ -28,7 +28,7 @@ st.header("학업 스트레스 검사 결과")
 user_score = 85
 
 # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-st.write(f"다나님의 점수는 또래 100명 중 **70**등이에요.")
+st.write(f"{st.session_state['user_metadata']['user_name'][1:]}님의 점수는 또래 100명 중 **70**등이에요.")
 
 # 아이콘 및 정보 섹션# 열을 사용하여 레이아웃 구성
 col1, col2, col3 = st.columns(3)
