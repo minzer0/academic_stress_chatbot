@@ -106,3 +106,69 @@ def percentile_above(mean, std_dev, value):
 
 percentile = percentile_above(3.773399014778325, 0.9273521676028207, average_score)
 percentile = round(percentile, 2)
+
+def summary(context):
+    system_prompt = f"""Based on the conversation between 'User' and 'AI', your task is to find out the user's one representative stressor, symptom, and coping strategy.
+    After you find out the representative stressor, symptom, and coping strategy, you should provide a brief summary of each item based on the conversation.
+
+    The items to be chosen are as follows:
+    1. Causes of Academic Stress: Intense competition (치열한 경쟁), Assignment overload (과제 부담), Relationship with professors (교수님과의 관계), Evaluation (평가), Academic pressure (학업 부담), Difficulty of classes (수업 난이도), Pressure to participate in classes (수업 참여 부담), Limited time (제한된 시간).
+    2. Symptoms of Academic Stress: Sleep disorders (수면 장애), Chronic fatigue (만성 피로), Headaches (두통), Digestive issues such as abdominal pain (복부 통증 등의 소화 문제), Nail-biting (손톱 물기), Drowsiness (졸음), Anxiety (불안감), Depression (우울감), Despair (절망감), Decreased concentration (집중 저하), Increased aggression (공격성 증가), Tendency to argue (논쟁 경향), Isolation from others (사람들로부터의 고립), Indifference to studies (학업에 대한 무관심), Increase or decrease in food intake (음식 섭취 증가 또는 감소).
+    3. Academic Stress Coping Strategies: Active coping (능동적 대응), Planning and execution (계획 수립 및 수행), Self-praise (자신에 대한 칭찬), Religious beliefs (종교적 신념), Information gathering about the situation (상황에 대한 정보 수집), Emotional expression and sharing secrets (감정 표출 및 비밀 공유).
+
+    Below is the conversation between 'User' and 'AI':
+    {context}
+
+    Your response must follow the format below:
+    치열한 경쟁: 강한 경쟁으로 인해 스트레스를 느끼고 있습니다. 
+    수면 장애: 시험기간이 다가오면서 잠을 제대로 못 자고 있습니다.
+    능동적 대응: 스트레스를 해소하기 위해 능동적으로 대처하고 있습니다. 
+
+    You must answer in Korean.
+    """
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-4-0125-preview",
+        messages=[
+            {"role": "system", "content": system_prompt},
+        ],
+        temperature=0.0,
+        stream=False
+    )
+    return completion.choices[0].message.content
+
+summary = summary(context)
+
+def overall_summary(context):
+    system_prompt = f"""Based on the conversation between 'User' and 'AI', your task is to summarize the user's stressor in one short sentence.
+
+    Below is the conversation between 'User' and 'AI':
+    {context}
+
+    Your response must follow the format below:
+    시험기간이 다가와 힘들었던 하루
+    ('~인 하루' 형태로 끝낼 것)
+
+    You must answer in Korean.
+    """
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-4-0125-preview",
+        messages=[
+            {"role": "system", "content": system_prompt},
+        ],
+        temperature=0.0,
+        stream=False
+    )
+    return completion.choices[0].message.content
+
+overall_summary = overall_summary(context)
+
+# current_date.year, current_date.month, current_date.day: 현재 날짜의 년, 월, 일
+# average_score: 평균 점수
+# percentile: 자신의 점수가 전체 사용자 중 몇 %에 위치하는지 
+# summary: 대표적인 스트레스 요인, 증상, 대처 전략 요약
+#          e.g., 평가: 사용자는 평가로 인한 스트레스를 겪고 있으며, 좋은 학점을 받아야 한다는 압박감을 느끼고 있습니다.
+#               만성 피로: 사용자는 스트레스로 인해 만성 피로를 겪고 있으며, 매일 매일 피곤함을 느끼고 있습니다.
+#               능동적 대응: 사용자는 학업 스트레스를 받는 상황에서 능동적으로 대응하려고 노력하고 있습니다.
+# overall_summary: 전체 대화 한 줄 요약
