@@ -3,7 +3,7 @@ import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
 
 ########################################################################################
-# SETUP
+# SETUP 
 
 st.set_page_config(
     page_title = "고민모니",
