@@ -36,7 +36,7 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     # 스트레스 점수 정보
-    st.markdown("### 스트레스 점수")
+    st.markdown("### 스트레스 수준")
     st.write(":red[85]")  # 스트레스 점수를 빨간색으로 표시
 
 with col2:
