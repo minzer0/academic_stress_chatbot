@@ -3,6 +3,7 @@ import streamlit as st
 from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
+from menu import menu
 
 from dummy_data import df_sorted
 
@@ -74,5 +75,5 @@ with col2:
     if st.button("🏠   메인 화면으로 돌아가기",
             use_container_width=True, ):
         st.switch_page("pages/Chatbot.py")
-    
 
+menu()

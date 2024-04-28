@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import altair as alt
 import pandas as pd
+from menu import menu
 
 from dummy_data import df_sorted
 from result_dictionary import stressor_icons
@@ -107,3 +108,5 @@ if st.button(":left_speech_bubble:   모니와 대화하며 \n **새로운 학�
 if st.button(":bar_chart:    이전 기록 확인하기",
              use_container_width=True):
     st.switch_page("pages/History.py")
+
+menu()

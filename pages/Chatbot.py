@@ -1,6 +1,6 @@
 from openai import OpenAI
 import streamlit as st
-# import os
+from menu import menu# import os
 
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
@@ -118,3 +118,4 @@ with st.sidebar:
     st.sidebar.header('이전 대화 기록 확인하기')
     # st.sidebar.button("로그 저장", on_click=save_conversation_to_file(st.session_state["conversation_history"]))
 
+menu()  
