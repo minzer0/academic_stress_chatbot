@@ -11,7 +11,7 @@ from menu import menu
 # from backend import average_score, percentile, summary, overall_summary
 from dummy_data import df_sorted
 
-########################################################################################
+#######################################################################################
 # SETUP
 
 st.set_page_config(
