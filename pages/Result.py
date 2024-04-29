@@ -45,10 +45,10 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
-average_score = filtered_df['average_score'].values[0]
-percentile = filtered_df['percentile'].values[0]
-summary = filtered_df['summary'].values[0]
-overall_summary = filtered_df['overall_summary'].values[0]
+average_score = filtered_df['average_score']
+percentile = filtered_df['percentile']
+summary = filtered_df['summary']
+overall_summary = filtered_df['overall_summary']
 
 summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
@@ -68,7 +68,7 @@ else:
     with col1:
         # 스트레스 점수 정보
         st.markdown("### 스트레스 수치")
-        st.write(f":red[상위 {average_score}%]")  # 스트레스 점수를 빨간색으로 표시
+        st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
 
     with col2:
         # 스트레스 원인 정보
