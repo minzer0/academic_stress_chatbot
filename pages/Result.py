@@ -6,7 +6,7 @@ from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 from menu import menu
 
-from backend import average_score, percentile, summary
+# from backend import average_score, percentile, summary
 from dummy_data import df_sorted
 
 ########################################################################################
@@ -25,9 +25,16 @@ with open("./.streamlit/style.css") as css:
 
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
 
+if "user_id" not in st.session_state:
+    st.error("로그인이 필요합니다.")
+    if st.button("로그인하러 가기"):
+        st.switch_page("pages/Login.py")
+    st.stop()
+
 user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
 
+exec(open("backend.py").read())
 
 summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################

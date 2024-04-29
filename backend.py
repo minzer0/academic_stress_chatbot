@@ -1,4 +1,5 @@
 from st_supabase_connection import SupabaseConnection
+import altair as alt
 from datetime import datetime
 import streamlit as st
 import pandas as pd
@@ -13,13 +14,20 @@ client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'],
                 organization=st.secrets['OPENAI_ORGANIZATION'])
 openai_api_key = st.secrets['OPENAI_API_KEY']
 
-user_id = st.session_state["user_id"]
-user_name = st.session_state["user_metadata"]["user_name"]
-current_date = datetime.now()
-
 data = st_supabase_client.table("chat").select("*").execute()
 df = pd.DataFrame(data.data)
 df['created_at'] = pd.to_datetime(df['created_at'])
+
+if "user_id" not in st.session_state:
+    st.error("로그인이 필요합니다.")
+    if st.button("로그인하러 가기"):
+        st.switch_page("pages/Login.py")
+    st.stop()
+    
+user_id = st.session_state["user_id"]
+user_name = st.session_state["user_metadata"]["user_name"]
+
+current_date = datetime.now()
 
 filtered_df = df[(df['user_name'] == user_name) & 
                  (df['user_id'] == user_id) &
@@ -177,3 +185,28 @@ overall_summary = overall_summary(context)
 #               만성 피로: 사용자는 스트레스로 인해 만성 피로를 겪고 있으며, 매일 매일 피곤함을 느끼고 있습니다.
 #               능동적 대응: 사용자는 학업 스트레스를 받는 상황에서 능동적으로 대응하려고 노력하고 있습니다.
 # overall_summary: 전체 대화 한 줄 요약
+
+try:
+    st_supabase_client.table("history").select("user_id, user_name").execute()
+except Exception as e:
+    st.write(e)
+
+if len(context) < 10:
+        st.error("대화 데이터가 부족합니다.")
+    if st.button("다시 챗봇과 대화하러 가기"):
+        st.switch_page("pages/Chatbot.py")
+    st.stop()
+
+st_supabase_client.table("history").insert(
+            [
+                {
+                    "user_id": user_id,
+                    "user_name": user_name,
+                    "date": str(current_date.year) + "-" + str(current_date.month) + "-" + str(current_date.day),
+                    "average_score": average_score,
+                    "percentile": percentile,
+                    "summary": summary,
+                    "overall_summary": overall_summary
+                }
+            ]
+        ).execute()
