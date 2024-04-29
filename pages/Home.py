@@ -11,7 +11,7 @@ from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
-from backend import average_score, percentile, summary
+# from backend import average_score, percentile, summary
 
 ########################################################################################
 # SETUP 
@@ -41,7 +41,12 @@ user_name = st.session_state["user_metadata"]["user_name"]
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
 
-if average_score:
+# for Test
+average_score = None
+
+if average_score is None:
+    st.image('./images/nulldata.png')
+else:
     with st.container(border=True):        
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
         st.write(f"지난 번 {user_name}님의 점수는 **{average_score}**로, 또래 100명 중 **{percentile}**등이에요.")
@@ -103,8 +108,6 @@ if average_score:
         with col3:
             st.subheader("스트레스 대처 전략")
             st.write(f"- {df_sorted.loc[1, '스트레스 대처 전략']} {coping_icons.get(df_sorted.loc[1, '스트레스 대처 전략'], '👌')}")
-else:
-    st.image('./images/nulldata.png')
 
 st.write("#")
 st.write("#")

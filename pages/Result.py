@@ -29,42 +29,45 @@ user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
 
 
+summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
 
 # 메인 헤더
 st.header("학업 스트레스 검사 결과")
 
-if average_score:
+if average_score is None:
+    st.image('./images/nulldata.png')
+else:
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-    st.write(f"{user_name}님의 점수는 또래 100명 중 **{percentile}**등이에요.")
+    st.write(f"{user_name}님의 점수는 **{average_score}**점이에요.")
 
     # 아이콘 및 정보 섹션# 열을 사용하여 레이아웃 구성
     col1, col2, col3 = st.columns(3)
 
     with col1:
         # 스트레스 점수 정보
-        st.markdown("### 스트레스 수준")
-        st.write(f":red[{average_score}]")  # 스트레스 점수를 빨간색으로 표시
+        st.markdown("### 스트레스 수치")
+        st.write(f":red[상위 {average_score}%]")  # 스트레스 점수를 빨간색으로 표시
 
     with col2:
         # 스트레스 원인 정보
         st.markdown("### 스트레스 원인")
-        stressor = df_sorted.loc[0, '스트레스 원인']
-        stressor_icon = stressor_icons.get(stressor, '👌')
+        stressor = summary_list[0]
+        stressor_icon = stressor_icons.get(stressor.split(':')[0].strip(), '👌')
         st.write(f"{stressor} {stressor_icon}")
 
     with col3:
         # 스트레스 대처 전략 정보
         st.markdown("### 스트레스 대처 전략")
-        coping = df_sorted.loc[0, '스트레스 대처 전략']
-        coping_icon = coping_icons.get(coping, '👌')
+        coping = summary_list[2]
+        coping_icon = coping_icons.get(coping.split(':')[0].strip(), '👌')
         st.write(f"{coping} {coping_icon}")
 
     # 추가 정보 (스트레스 증상)
     st.markdown("### 스트레스 증상")
     for i in range(3):  # 증상 정보를 반복 출력
-        symptom = df_sorted.loc[i, '스트레스 증상']
-        symptom_icon = symptoms_icons.get(symptom, '👌')
+        symptom = summary_list[1]
+        symptom_icon = symptoms_icons.get(symptom.split(':')[0].strip(), '👌')
         st.write(f"- {symptom} {symptom_icon}")
 
     st.write("#")
@@ -73,9 +76,6 @@ if average_score:
 
     # 라인 차트 시각화
     st.line_chart(df_sorted, x="날짜", y="스트레스 점수")
-else:
-    st.image('./images/nulldata.png')
-
 
 col1, col2, col3 = st.columns(3)
 with col2:
