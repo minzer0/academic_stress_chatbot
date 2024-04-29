@@ -45,16 +45,16 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
-average_score = filtered_df['average_score']
-percentile = filtered_df['percentile']
-summary = filtered_df['summary']
-overall_summary = filtered_df['overall_summary']
+average_score = filtered_df['average_score'].values[0]
+percentile = filtered_df['percentile'].values[0]
+summary = filtered_df['summary'].values[0]
+overall_summary = filtered_df['overall_summary'].values[0]
 
 # 각 summary 요소를 마침표로 분할하고 평탄화
 summary_lists = summary.str.split('.')
 
 # 평탄화된 리스트 생성
-summary_list = [sentence.strip() for sublist in summary_lists for sentence in sublist if sentence]
+summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
 
 # 메인 헤더
