@@ -29,7 +29,7 @@ with st.container(border=True):
     
     col1, col2, col3 = st.columns(3)
     with col2:
-        if st.button("회원가입", use_container_wide=True):
+        if st.button("회원가입", use_container_width=True):
             try:
                 st_supabase_client.auth.sign_up({
                     "email": email, 

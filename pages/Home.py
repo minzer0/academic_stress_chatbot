@@ -44,7 +44,7 @@ st.title(f"{user_name}님의 학업 스트레스 지수")
 if average_score:
     with st.container(border=True):        
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write(f"지난 번 {st.session_state['user_metadata']['user_name'][1:]}님의 점수는 **{average_score}**로, 또래 100명 중 **{percentile}**등이에요.")
+        st.write(f"지난 번 {user_name}님의 점수는 **{average_score}**로, 또래 100명 중 **{percentile}**등이에요.")
         st.write("**:blue[파란색]**: 나와 비슷한 점수(+/-5)를 가진 사람들 ")
 
         # 데이터 생성

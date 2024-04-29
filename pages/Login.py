@@ -27,7 +27,7 @@ with st.container(border=True):
     
     col1, col2, col3 = st.columns(3)
     with col2:
-        st.button("로그인", use_container_wide=True)
+        st.button("로그인", use_container_width=True)
     
     if email and password:
         try:
