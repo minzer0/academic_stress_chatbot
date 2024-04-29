@@ -34,7 +34,7 @@ with tabs[0]:
 
     col1, col2, col3 = st.columns(3)
     with col2:
-        main_button = st.button(label = "🏠   메인 화면으로 돌아가기", key=0)
+        main_button = st.button(label = "🏠   홈 화면으로 돌아가기", key=0)
         if main_button:
             st.switch_page("pages/Home.py")
 
