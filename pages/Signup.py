@@ -25,7 +25,7 @@ with st.container(border=True):
     
     user_name = st.text_input("이름", key="name_signup")
     email = st.text_input("이메일 주소", key="email_signup")
-    password = st.text_input("비밀번호", type="password", key="password_signup")           
+    password = st.text_input("비밀번호 (6자리 이상의 숫자 + 영문 조합으로 설정해주세요.)", type="password", key="password_signup")           
     
     col1, col2, col3 = st.columns(3)
     with col2:
