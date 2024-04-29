@@ -53,7 +53,7 @@ summary = filtered_df['summary'].values[0]
 overall_summary = filtered_df['overall_summary'].values[0]
 
 # 평탄화된 리스트 생성
-summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
+summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
 ########################################################################################
 
 # 메인 헤더
@@ -109,7 +109,7 @@ with col2:
     if st.button(":bar_chart:    이전 기록 확인하기",
             use_container_width=True):
         st.switch_page("pages/History.py")
-    if st.button("🏠   메인 화면으로 돌아가기",
+    if st.button("🏠   홈 화면으로 돌아가기",
             use_container_width=True, ):
         st.switch_page("pages/Chatbot.py")
 
