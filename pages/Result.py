@@ -45,10 +45,10 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
-average_score = filtered_df['average_score'].values[0]
-percentile = filtered_df['percentile'].values[0]
-summary = filtered_df['summary'].values[0]
-overall_summary = filtered_df['overall_summary'].values[0]
+average_score = filtered_df['average_score']
+percentile = filtered_df['percentile']
+summary = filtered_df['summary']
+overall_summary = filtered_df['overall_summary']
 
 summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
@@ -60,7 +60,7 @@ if average_score is None:
     st.image('./images/nulldata.png')
 else:
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-    st.write(f"{user_name}님의 점수는 **{average_score: .2f}**점이에요.")
+    st.write(f"{user_name}님의 점수는 {average_score: .2f}점이에요.")
 
 
     # 스트레스 점수 정보
@@ -69,22 +69,29 @@ else:
 
     # 스트레스 원인 정보
     st.markdown("### 스트레스 원인")
-    stressor = summary_list[0]
-    stressor_icon = stressor_icons.get(stressor.split(':')[0].strip(), '👌')
-    st.write(f"{stressor} {stressor_icon}")
+    stressor = summary_list[0].split(':')[0].strip()
+    stressor_explain = summary_list[0].split(':')[1].strip() 
+    stressor_icon = stressor_icons.get(stressor, '👌')
+    st.write(f"{stressor_icon} {stressor}")
+    st.write(f"{stressor_explain}")
+
+   # 스트레스 증상
+    st.markdown("### 스트레스 증상")
+    symptom = summary_list[1].split(':')[0].strip()
+    symptom_explain = summary_list[1].split(':')[1].strip() 
+    symptom_icon = symptoms_icons.get(symptom, '👌')
+    st.write(f"{symptom_icon} {symptom}")
+    st.write(f"{symptom_explain}")
 
     # 스트레스 대처 전략 정보
     st.markdown("### 스트레스 대처 전략")
-    coping = summary_list[2]
-    coping_icon = coping_icons.get(coping.split(':')[0].strip(), '👌')
-    st.write(f"{coping} {coping_icon}")
+    coping = summary_list[2].split(':')[0].strip()
+    coping_explain = summary_list[2].split(':')[1].strip() 
+    coping_icon = coping_icons.get(coping, '👌')
+    st.write(f"{coping_icon} {coping}")
+    st.write(f"{coping_explain}")
 
-    # 추가 정보 (스트레스 증상)
-    st.markdown("### 스트레스 증상")
-    symptom = summary_list[1]
-    symptom_icon = symptoms_icons.get(symptom.split(':')[0].strip(), '👌')
-    st.write(f"- {symptom} {symptom_icon}")
-
+ 
     st.write("#")
 
     st.subheader("학업 스트레스 점수 추이")
