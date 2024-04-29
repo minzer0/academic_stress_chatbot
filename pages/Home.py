@@ -49,6 +49,7 @@ filtered_df = df[(df['user_name'] == user_name) &
 if filtered_df['average_score'].empty:
     data_empty = True
 else:
+    data_empty = False
     average_score = filtered_df['average_score'].values[0]
     percentile = filtered_df['percentile'].values[0]
     summary = filtered_df['summary'].values[0]
