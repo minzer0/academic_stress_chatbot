@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 import altair as alt
+import numpy as np
 
 from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
