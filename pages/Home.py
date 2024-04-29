@@ -56,8 +56,6 @@ summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
 
-# for Test
-
 if average_score is None:
     st.image('./images/nulldata.png')
 else:
@@ -109,18 +107,18 @@ else:
         # 스트레스 원인
         with col1:
             st.subheader("스트레스 원인")
-            st.write(f"{stressor_icon} {stressor}")
+            st.write(f"- {df_sorted.loc[1, '스트레스 원인']} {stressor_icons.get(df_sorted.loc[1, '스트레스 원인'], '👌')}")
 
         # 스트레스 증상
         with col2:
             st.subheader("스트레스 증상")
-            st.write(f"{symptom_icon} {symptom}")
+            st.write(f"- {df_sorted.loc[0, '스트레스 증상']} {symptoms_icons.get(df_sorted.loc[0, '스트레스 증상'], '👌')}")
 
         # 스트레스 대처 전략
         with col3:
             st.subheader("스트레스 대처 전략")
-            st.write(f"{coping_icon} {coping}")
-            
+            st.write(f"- {df_sorted.loc[1, '스트레스 대처 전략']} {coping_icons.get(df_sorted.loc[1, '스트레스 대처 전략'], '👌')}")
+
 st.write("#")
 st.write("#")
 
