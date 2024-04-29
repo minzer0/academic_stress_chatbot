@@ -6,7 +6,8 @@ from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 from menu import menu
 
-from backend import average_score, percentile, summary, overall_summary
+# from backend import average_score, percentile, summary, overall_summary
+import backend
 from dummy_data import df_sorted
 
 ########################################################################################
@@ -34,7 +35,7 @@ if "user_id" not in st.session_state:
 user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
 
-exec(open("backend.py").read())
+exec(open('backend.py').read())
 
 summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
