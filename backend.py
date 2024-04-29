@@ -7,6 +7,23 @@ from openai import OpenAI
 import csv
 from scipy.stats import norm
 
+########################################################################################
+# SETUP 
+
+st.set_page_config(
+    page_title = "고민모니",
+    page_icon = "./images/logo.png"
+)
+
+# .streamlit/style.css 파일 열기
+with open("./.streamlit/style.css") as css:
+    # CSS 파일을 읽어와서 스타일 적용
+    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+
+st.title("결과 분석 중입니다...🔍")
+########################################################################################
+
+
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
 
 # Set OpenAI API key 
