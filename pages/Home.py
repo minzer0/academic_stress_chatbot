@@ -46,16 +46,7 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
-if filtered_df['average_score'].empty:
-    data_empty = True
-else:
-    data_empty = False
-    average_score = filtered_df['average_score'].values[0]
-    percentile = filtered_df['percentile'].values[0]
-    summary = filtered_df['summary'].values[0]
-    overall_summary = filtered_df['overall_summary'].values[0]
-
-    summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
+data_empty = True
 
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
