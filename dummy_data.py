@@ -11,7 +11,7 @@ random.seed = 10
 date_range = [dt.date.today() - dt.timedelta(days=i) for i in range(10)]
 
 # 스트레스 점수는 0~100 범위에서 임의로 생성
-stress_scores = [random.randint(0, 100) for _ in range(10)]
+stress_scores = [random.uniform(1, 5) for _ in range(10)]
 
 # 임의의 대화 주요 내용
 conversations = [

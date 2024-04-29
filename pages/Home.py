@@ -11,7 +11,7 @@ from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
-# from backend import average_score, percentile, summary
+from backend import average_score, percentile, summary
 
 ########################################################################################
 # SETUP 
@@ -49,12 +49,12 @@ if average_score is None:
 else:
     with st.container(border=True):        
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write(f"지난 번 {user_name}님의 점수는 **{average_score}**로, 또래 100명 중 **{percentile}**등이에요.")
+        st.write(f"지난 번 {user_name}님의 점수는 **{average_score :2f}**로, 또래 100명 중 **{percentile :2f}**등이에요.")
         st.write("**:blue[파란색]**: 나와 비슷한 점수(+/-5)를 가진 사람들 ")
 
         # 데이터 생성
         np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
-        n_samples = 1000  # 샘플 수
+        n_samples = 100  # 샘플 수
 
         # 정규분포 데이터 생성
         data = np.random.normal(3.773399014778325, 0.9273521676028207, n_samples)
@@ -65,7 +65,7 @@ else:
             alt.Chart(df)
             .mark_bar()
             .encode(
-                x=alt.X("score:Q", bin=alt.Bin(extent=[0.0, 5.0], step=0.5)),  # 5점 간격으로 분할
+                x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),  # 5점 간격으로 분할
                 y="count()",
                 color=alt.value("lightgray")
             )
@@ -76,7 +76,7 @@ else:
             alt.Chart(df[df['score'].between(average_score-0.5, average_score+0.5)])  # 점수 기준 +/-5 범위
             .mark_bar(color='blue')  # 강조 색상 설정
             .encode(
-                x=alt.X("score:Q", bin=alt.Bin(extent=[0.0, 5.0], step=0.5)),
+                x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
                 y="count()",
             )
         )
