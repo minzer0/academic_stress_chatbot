@@ -9,7 +9,6 @@ from result_dictionary import coping_icons
 from menu import menu
 
 # from backend import average_score, percentile, summary, overall_summary
-from subprocess import call
 from dummy_data import df_sorted
 
 ########################################################################################
@@ -37,7 +36,6 @@ if "user_id" not in st.session_state:
 user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
 
-call(["python", "backend.py"])
 
 data = st_supabase_client.table("history").select("*").execute()
 df = pd.DataFrame(data.data)

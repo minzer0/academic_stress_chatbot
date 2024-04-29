@@ -210,3 +210,5 @@ st_supabase_client.table("history").insert(
                 }
             ]
         ).execute()
+
+st.switch_page("pages/Result.py")
