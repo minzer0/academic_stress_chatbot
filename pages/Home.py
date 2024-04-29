@@ -11,7 +11,7 @@ from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
-from backend import average_score, percentile, summary
+from Result import average_score, percentile, summary
 
 ########################################################################################
 # SETUP 
