@@ -46,7 +46,7 @@ with tabs[1]:
     for i in range(len(df_sorted)):
         # f-string 내부의 인용 부호 수정
         with st.expander(label=f"{df_sorted.loc[i, '날짜']} : {df_sorted.loc[i, '대화 주요 내용']}"):
-            st.metric(label="학업 스트레스 총점", value=df_sorted.loc[i, '스트레스 점수'], )
+            st.metric(label="학업 스트레스 총점", value= f"{df_sorted.loc[i, '스트레스 점수']:.2f}", )
 
             st.write("스트레스 원인:")
             st.write(f"- {df_sorted.loc[i, '스트레스 원인']} {stressor_icons.get(df_sorted.loc[i, '스트레스 원인'], '👌')}")
