@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
+import altair as alt
+import numpy as np
 
 from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
@@ -65,6 +67,7 @@ try:
     # 스트레스 점수 정보
     st.markdown("### 스트레스 수치")
     st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
+
 
     # 스트레스 원인 정보
     st.markdown("### 스트레스 원인")
