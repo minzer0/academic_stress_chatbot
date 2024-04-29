@@ -7,6 +7,7 @@ from result_dictionary import coping_icons
 from menu import menu
 
 # from backend import average_score, percentile, summary
+import backend
 from dummy_data import df_sorted
 
 ########################################################################################
