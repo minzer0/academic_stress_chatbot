@@ -50,7 +50,7 @@ percentile = filtered_df['percentile']
 summary = filtered_df['summary']
 overall_summary = filtered_df['overall_summary']
 
-summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
+summary_list = [sentence.strip() for sentence in summary.str.split('.') if sentence]
 ########################################################################################
 
 # 메인 헤더
