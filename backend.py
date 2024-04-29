@@ -191,6 +191,12 @@ try:
 except Exception as e:
     st.write(e)
 
+if len(context) == 0:
+        st.error("대화 데이터가 부족합니다.")
+    if st.button("다시 챗봇과 대화하러 가기"):
+        st.switch_page("pages/Chatbot.py")
+    st.stop()
+
 st_supabase_client.table("history").insert(
             [
                 {
