@@ -57,9 +57,7 @@ summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 # 메인 헤더
 st.header("학업 스트레스 검사 결과")
 
-if average_score is None:
-    st.image('./images/nulldata.png')
-else:
+try:
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
     st.write(f"{user_name}님의 점수는 {average_score: .2f}점이에요.")
 
@@ -99,6 +97,9 @@ else:
 
     # 라인 차트 시각화
     st.line_chart(df_sorted, x="날짜", y="스트레스 점수")
+   
+except:
+    st.image('./images/nulldata.png')
 
 col1, col2, col3 = st.columns(3)
 with col2:

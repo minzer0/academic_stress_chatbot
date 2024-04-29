@@ -34,7 +34,7 @@ coping = list(coping_icons.keys())
 # DataFrame 생성
 data = {
     "날짜": date_range,
-    "스트레스 점수": stress_scores,
+    "스트레스 점수": f"{stress_scores:.2f}",
     "대화 주요 내용": conversations[:10],  # 10개 이하로 제한
     "스트레스 원인": [random.choice(stressor) for _ in range(10)],
     "스트레스 증상": [random.choice(symptoms) for _ in range(10)],

@@ -46,23 +46,25 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
-# average_score = filtered_df['average_score'].values[0]
-# percentile = filtered_df['percentile'].values[0]
-# summary = filtered_df['summary'].values[0]
-# overall_summary = filtered_df['overall_summary'].values[0]
+if filtered_df['average_score'].empty:
+    data_empty = True
+else:
+    average_score = filtered_df['average_score'].values[0]
+    percentile = filtered_df['percentile'].values[0]
+    summary = filtered_df['summary'].values[0]
+    overall_summary = filtered_df['overall_summary'].values[0]
 
-# summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
+    summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
 
-average_score = None
-if average_score is None:
+if data_empty:
     st.image('./images/nulldata.png')
 else:
     with st.container(border=True):        
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write(f"지난 번 {user_name}님의 점수는 **{average_score:2f}**로, 또래 100명 중 **{percentile:2f}**등이에요.")
+        st.write(f"지난 번 {user_name}님의 점수는 **{average_score:.2f}**로, 또래 100명 중 **{percentile:2f}**등이에요.")
         st.write("**:blue[파란색]**: 나와 비슷한 점수(+/-5)를 가진 사람들 ")
 
         # 데이터 생성
