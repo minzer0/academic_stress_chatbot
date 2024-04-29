@@ -1,4 +1,5 @@
 from st_supabase_connection import SupabaseConnection
+import altair as alt
 from datetime import datetime
 import streamlit as st
 import pandas as pd
@@ -13,13 +14,13 @@ client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'],
                 organization=st.secrets['OPENAI_ORGANIZATION'])
 openai_api_key = st.secrets['OPENAI_API_KEY']
 
-user_id = st.session_state["user_id"]
-user_name = st.session_state["user_metadata"]["user_name"]
-current_date = datetime.now()
-
 data = st_supabase_client.table("chat").select("*").execute()
 df = pd.DataFrame(data.data)
 df['created_at'] = pd.to_datetime(df['created_at'])
+
+user_id = st.session_state["user_id"]
+user_name = st.session_state["user_metadata"]["user_name"]
+current_date = datetime.now()
 
 filtered_df = df[(df['user_name'] == user_name) & 
                  (df['user_id'] == user_id) &
