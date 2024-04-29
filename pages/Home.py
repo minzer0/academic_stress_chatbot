@@ -11,6 +11,8 @@ from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
+from Result import stressor, stressor_icon, symptom, symptom_icon, coping, coping_icon
+
 ########################################################################################
 # SETUP 
 
@@ -55,7 +57,6 @@ summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 st.title(f"{user_name}님의 학업 스트레스 지수")
 
 # for Test
-average_score = None
 
 if average_score is None:
     st.image('./images/nulldata.png')
@@ -108,20 +109,18 @@ else:
         # 스트레스 원인
         with col1:
             st.subheader("스트레스 원인")
-            st.write(f"- {df_sorted.loc[1, '스트레스 원인']} {stressor_icons.get(df_sorted.loc[1, '스트레스 원인'], '👌')}")
+            st.write(f"{stressor_icon} {stressor}")
 
         # 스트레스 증상
         with col2:
             st.subheader("스트레스 증상")
-            st.write(f"- {df_sorted.loc[0, '스트레스 증상']} {symptoms_icons.get(df_sorted.loc[0, '스트레스 증상'], '👌')}")
-            st.write(f"- {df_sorted.loc[1, '스트레스 증상']} {symptoms_icons.get(df_sorted.loc[1, '스트레스 증상'], '👌')}")
-            st.write(f"- {df_sorted.loc[2, '스트레스 증상']} {symptoms_icons.get(df_sorted.loc[2, '스트레스 증상'], '👌')}")
-            
+            st.write(f"{symptom_icon} {symptom}")
+
         # 스트레스 대처 전략
         with col3:
             st.subheader("스트레스 대처 전략")
-            st.write(f"- {df_sorted.loc[1, '스트레스 대처 전략']} {coping_icons.get(df_sorted.loc[1, '스트레스 대처 전략'], '👌')}")
-
+            st.write(f"{coping_icon} {coping}")
+            
 st.write("#")
 st.write("#")
 
