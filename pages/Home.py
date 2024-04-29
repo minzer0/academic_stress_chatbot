@@ -11,7 +11,7 @@ from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
-from Result import stressor, stressor_icon, symptom, symptom_icon, coping, coping_icon
+# from Result import stressor, stressor_icon, symptom, symptom_icon, coping, coping_icon
 
 ########################################################################################
 # SETUP 
