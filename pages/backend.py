@@ -6,6 +6,7 @@ import pandas as pd
 from openai import OpenAI
 import csv
 from scipy.stats import norm
+import re
 
 ########################################################################################
 # SETUP 
@@ -126,8 +127,9 @@ def get_scores(context):
     return completion.choices[0].message.content
 
 scores = get_scores(context)
-score_list = list(map(int, scores.split(',')))
-average_score = sum(score_list) / len(score_list)
+numbers = re.findall(r'\d+', scores)
+number_list = [int(num) for num in numbers]
+average_score = sum(number_list) / len(number_list)
 
 def percentile_above(mean, std_dev, value):
     z_score = (value - mean) / std_dev
