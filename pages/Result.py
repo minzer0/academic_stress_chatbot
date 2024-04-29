@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 
 from result_dictionary import stressor_icons
@@ -36,6 +38,19 @@ user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
 
 call(["python", "backend.py"])
+
+data = st_supabase_client.table("history").select("*").execute()
+df = pd.DataFrame(data.data)
+current_date = datetime.now()
+
+filtered_df = df[(df['user_name'] == user_name) & 
+                 (df['user_id'] == user_id) &
+                 (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+
+average_score = filtered_df['average_score'].values[0]
+percentile = filtered_df['percentile'].values[0]
+summary = filtered_df['summary'].values[0]
+overall_summary = filtered_df['overall_summary'].values[0]
 
 summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
