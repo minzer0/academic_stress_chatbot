@@ -2,11 +2,16 @@ from st_supabase_connection import SupabaseConnection
 from datetime import datetime
 import streamlit as st
 import pandas as pd
-import openai
+from openai import OpenAI
 import csv
 from scipy.stats import norm
 
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
+
+# Set OpenAI API key 
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'], 
+                organization=st.secrets['OPENAI_ORGANIZATION'])
+openai_api_key = st.secrets['OPENAI_API_KEY']
 
 user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
@@ -85,7 +90,7 @@ def get_scores(context):
     (You must return only numbers and commas. No texts!!) 
     """
 
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model="gpt-4-0125-preview",
         messages=[
             {"role": "system", "content": system_prompt},
@@ -127,7 +132,7 @@ def summary(context):
     You must answer in Korean.
     """
 
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model="gpt-4-0125-preview",
         messages=[
             {"role": "system", "content": system_prompt},
@@ -152,7 +157,7 @@ def overall_summary(context):
     You must answer in Korean.
     """
 
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model="gpt-4-0125-preview",
         messages=[
             {"role": "system", "content": system_prompt},
