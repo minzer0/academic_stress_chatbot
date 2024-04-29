@@ -110,7 +110,7 @@ if user_input := st.chat_input():
             ]
         ).execute()
         
-        if "<대화가 종료되었습니다.>" in assistant_reply:
+        if "대화가 종료되었습니다." in assistant_reply:
             st.switch_page("pages/Result.py")
 
 menu()  
