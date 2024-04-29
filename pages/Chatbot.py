@@ -57,7 +57,7 @@ openai_api_key = st.secrets['OPENAI_API_KEY']
 if "conversation_history" not in st.session_state:    
     st.session_state.conversation_history = [
         {"role": "system", "content": st.secrets['system_prompt']},
-        {"role": "assistant", "content": f"안녕 {user_name[1:]}! 나는 모니라고 해😊"}
+        {"role": "assistant", "content": f"안녕! 나는 모니라고 해😊"}
     ]
 
 
