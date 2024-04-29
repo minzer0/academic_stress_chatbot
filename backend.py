@@ -186,6 +186,11 @@ overall_summary = overall_summary(context)
 #               능동적 대응: 사용자는 학업 스트레스를 받는 상황에서 능동적으로 대응하려고 노력하고 있습니다.
 # overall_summary: 전체 대화 한 줄 요약
 
+try:
+    st_supabase_client.table("history").select("user_id, user_name").execute()
+except Exception as e:
+    st.write(e)
+
 st_supabase_client.table("history").insert(
             [
                 {
