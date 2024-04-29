@@ -11,8 +11,6 @@ from result_dictionary import stressor_icons
 from result_dictionary import symptoms_icons
 from result_dictionary import coping_icons
 
-from Result import average_score, percentile, summary
-
 ########################################################################################
 # SETUP 
 
@@ -34,9 +32,24 @@ if "user_metadata" not in st.session_state:
 
 
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
-
 user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
+
+
+data = st_supabase_client.table("history").select("*").execute()
+df = pd.DataFrame(data.data)
+current_date = datetime.now()
+
+filtered_df = df[(df['user_name'] == user_name) & 
+                 (df['user_id'] == user_id) &
+                 (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+
+average_score = filtered_df['average_score'].values[0]
+percentile = filtered_df['percentile'].values[0]
+summary = filtered_df['summary'].values[0]
+overall_summary = filtered_df['overall_summary'].values[0]
+
+summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
