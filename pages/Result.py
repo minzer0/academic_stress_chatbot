@@ -50,9 +50,6 @@ percentile = filtered_df['percentile'].values[0]
 summary = filtered_df['summary'].values[0]
 overall_summary = filtered_df['overall_summary'].values[0]
 
-# 각 summary 요소를 마침표로 분할하고 평탄화
-summary_lists = summary.str.split('.')
-
 # 평탄화된 리스트 생성
 summary_list = [sentence.strip() for sentence in summary.split('.') if sentence]
 ########################################################################################
