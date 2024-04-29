@@ -185,3 +185,17 @@ overall_summary = overall_summary(context)
 #               만성 피로: 사용자는 스트레스로 인해 만성 피로를 겪고 있으며, 매일 매일 피곤함을 느끼고 있습니다.
 #               능동적 대응: 사용자는 학업 스트레스를 받는 상황에서 능동적으로 대응하려고 노력하고 있습니다.
 # overall_summary: 전체 대화 한 줄 요약
+
+st_supabase_client.table("history").insert(
+            [
+                {
+                    "user_id": user_id,
+                    "user_name": user_name,
+                    "date": str(current_date.year) + "-" + str(current_date.month) + "-" + str(current_date.day),
+                    "average_score": average_score,
+                    "percentile": percentile,
+                    "summary": summary,
+                    "overall_summary": overall_summary
+                }
+            ]
+        ).execute()
