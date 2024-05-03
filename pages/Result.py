@@ -53,8 +53,6 @@ percentile = filtered_df['percentile']
 summary = filtered_df['summary']
 overall_summary = filtered_df['overall_summary']
 
-# 평탄화된 리스트 생성
-summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
 ########################################################################################
 if len(filtered_df) == 0:
     st.image('./images/nulldata3.png')
@@ -64,6 +62,8 @@ if len(filtered_df) == 0:
 
 else:
 # 메인 헤더
+    # 평탄화된 리스트 생성
+    summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
     st.header("학업 스트레스 검사 결과")
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
     st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
