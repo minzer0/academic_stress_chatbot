@@ -61,13 +61,43 @@ st.header("학업 스트레스 검사 결과")
 
 try:
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-    st.write(f"{user_name}님의 점수는 {average_score: .2f}점이에요.")
+    st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
 
+    with st.container(border=True):        
+            # 데이터 생성
+            np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
+            n_samples = 100  # 샘플 수
 
-    with col1:
-        # 스트레스 점수 정보
-        st.markdown("### 스트레스 수치")
-        st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
+            # 정규분포 데이터 생성
+            data = np.random.normal(3.773399014778325, 0.9273521676028207, n_samples)
+            df = pd.DataFrame(data, columns=['score'])
+
+            # 히스토그램 생성
+            base_histogram = (
+                alt.Chart(df)
+                .mark_bar()
+                .encode(
+                    x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),  # 5점 간격으로 분할
+                    y="count()",
+                    color=alt.value("lightgray")
+                )
+            )
+
+            # 특정 영역 강조
+            highlight = (
+                alt.Chart(df[df['score'].between(average_score-0.1, average_score+0.1)])  # 점수 기준 +/-5 범위
+                .mark_bar(color='blue')  # 강조 색상 설정
+                .encode(
+                    x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
+                    y="count()",
+                )
+            )
+
+            # 히스토그램과 강조 영역 결합
+            final_chart = base_histogram + highlight
+
+            # 차트 렌더링
+            st.altair_chart(final_chart, use_container_width=True)
 
 
     # 스트레스 원인 정보

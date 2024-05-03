@@ -50,6 +50,8 @@ history_df = df[(df['user_name'] == user_name) &
                 (df['user_id'] == user_id) &
                 (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
+history_df_de = history_df.sort_values(by='date', ascending=False)
+
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
 
@@ -58,8 +60,7 @@ if len(history_df) == 0:
 else:
     with st.container(border=True):        
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write(f"지난 번 {user_name}님의 점수는 **{average_score:.2f}**로, 또래 100명 중 **{percentile:2f}**등이에요.")
-        st.write("**:blue[파란색]**: 나와 비슷한 점수(+/-5)를 가진 사람들 ")
+        st.write(f"지난 번 {user_name}님의 점수는 **{history_df_de['average_score'][0]:.2f}**로, 전체 사용자 중 상위 **{history_df_de['percentile'][0]:2f}**%에요.")
 
         # 데이터 생성
         np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
@@ -82,7 +83,7 @@ else:
 
         # 특정 영역 강조
         highlight = (
-            alt.Chart(df[df['score'].between(average_score-0.1, average_score+0.1)])  # 점수 기준 +/-5 범위
+            alt.Chart(df[df['score'].between(history_df_de['average_score'][0]-0.1, history_df_de['average_score'][0]+0.1)])  # 점수 기준 +/-5 범위
             .mark_bar(color='blue')  # 강조 색상 설정
             .encode(
                 x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
@@ -96,7 +97,8 @@ else:
         # 차트 렌더링
         st.altair_chart(final_chart, use_container_width=True)
 
-
+    summary = history_df_de.loc['summary'][0]
+    summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
 
     with st.container():
         col1, col2, col3 = st.columns(3)
@@ -104,17 +106,29 @@ else:
         # 스트레스 원인
         with col1:
             st.subheader("스트레스 원인")
-            st.write(f"- {df_sorted.loc[1, '스트레스 원인']} {stressor_icons.get(df_sorted.loc[1, '스트레스 원인'], '👌')}")
+            stressor = summary_list[0].split(':')[0].strip()
+            stressor_explain = summary_list[0].split(':')[1].strip() 
+            stressor_icon = stressor_icons.get(stressor, '👌')
+            st.write(f"{stressor_icon} {stressor}")
+            st.write(f"{stressor_explain}")
 
         # 스트레스 증상
         with col2:
             st.subheader("스트레스 증상")
-            st.write(f"- {df_sorted.loc[0, '스트레스 증상']} {symptoms_icons.get(df_sorted.loc[0, '스트레스 증상'], '👌')}")
+            symptom = summary_list[1].split(':')[0].strip()
+            symptom_explain = summary_list[1].split(':')[1].strip() 
+            symptom_icon = symptoms_icons.get(symptom, '👌')
+            st.write(f"{symptom_icon} {symptom}")
+            st.write(f"{symptom_explain}")
 
         # 스트레스 대처 전략
         with col3:
             st.subheader("스트레스 대처 전략")
-            st.write(f"- {df_sorted.loc[1, '스트레스 대처 전략']} {coping_icons.get(df_sorted.loc[1, '스트레스 대처 전략'], '👌')}")
+            coping = summary_list[2].split(':')[0].strip()
+            coping_explain = summary_list[2].split(':')[1].strip() 
+            coping_icon = coping_icons.get(coping, '👌')
+            st.write(f"{coping_icon} {coping}")
+            st.write(f"{coping_explain}")
 
 st.write("#")
 st.write("#")
