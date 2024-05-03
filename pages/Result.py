@@ -64,16 +64,10 @@ try:
     st.write(f"{user_name}님의 점수는 {average_score: .2f}점이에요.")
 
 
-<<<<<<< HEAD
     with col1:
         # 스트레스 점수 정보
         st.markdown("### 스트레스 수치")
         st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
-=======
-    # 스트레스 점수 정보
-    st.markdown("### 스트레스 수치")
-    st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
->>>>>>> 3deebae76e5ff83fda5c2ec9108747e3bc30f082
 
 
     # 스트레스 원인 정보
