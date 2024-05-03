@@ -60,36 +60,37 @@ if average_score is None:
     st.image('./images/nulldata.png')
 else:
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-    st.write(f"{user_name}님의 점수는 **{average_score}**점이에요.")
+    st.write(f"{user_name}님의 점수는 **{average_score: .2f}**점이에요.")
 
-    # 아이콘 및 정보 섹션# 열을 사용하여 레이아웃 구성
-    col1, col2, col3 = st.columns(3)
 
+<<<<<<< HEAD
     with col1:
         # 스트레스 점수 정보
         st.markdown("### 스트레스 수치")
         st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
+=======
+    # 스트레스 점수 정보
+    st.markdown("### 스트레스 수치")
+    st.write(f":red[상위 {percentile}%]")  # 스트레스 점수를 빨간색으로 표시
+>>>>>>> 3deebae76e5ff83fda5c2ec9108747e3bc30f082
 
-    with col2:
-        # 스트레스 원인 정보
-        st.markdown("### 스트레스 원인")
-        stressor = summary_list[0]
-        stressor_icon = stressor_icons.get(stressor.split(':')[0].strip(), '👌')
-        st.write(f"{stressor} {stressor_icon}")
+    # 스트레스 원인 정보
+    st.markdown("### 스트레스 원인")
+    stressor = summary_list[0]
+    stressor_icon = stressor_icons.get(stressor.split(':')[0].strip(), '👌')
+    st.write(f"{stressor} {stressor_icon}")
 
-    with col3:
-        # 스트레스 대처 전략 정보
-        st.markdown("### 스트레스 대처 전략")
-        coping = summary_list[2]
-        coping_icon = coping_icons.get(coping.split(':')[0].strip(), '👌')
-        st.write(f"{coping} {coping_icon}")
+    # 스트레스 대처 전략 정보
+    st.markdown("### 스트레스 대처 전략")
+    coping = summary_list[2]
+    coping_icon = coping_icons.get(coping.split(':')[0].strip(), '👌')
+    st.write(f"{coping} {coping_icon}")
 
     # 추가 정보 (스트레스 증상)
     st.markdown("### 스트레스 증상")
-    for i in range(3):  # 증상 정보를 반복 출력
-        symptom = summary_list[1]
-        symptom_icon = symptoms_icons.get(symptom.split(':')[0].strip(), '👌')
-        st.write(f"- {symptom} {symptom_icon}")
+    symptom = summary_list[1]
+    symptom_icon = symptoms_icons.get(symptom.split(':')[0].strip(), '👌')
+    st.write(f"- {symptom} {symptom_icon}")
 
     st.write("#")
 
