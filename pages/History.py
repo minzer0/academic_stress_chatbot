@@ -71,7 +71,7 @@ else:
         for i in range(len(history_df_de)):
             # f-string 내부의 인용 부호 수정
             with st.expander(label=f"{history_df_de.loc[i, 'date']} : {history_df_de.loc[i, 'overall_summary']}"):
-                st.metric(label="학업 스트레스 총점", value= f"{df_sorted.loc[i, 'average_score']:.2f}", )
+                st.metric(label="학업 스트레스 총점", value= f"{history_df_de.loc[i, 'average_score']:.2f}", )
 
                 summary = history_df_de.loc[i, 'summary']
                 summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
