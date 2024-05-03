@@ -56,11 +56,15 @@ overall_summary = filtered_df['overall_summary']
 # 평탄화된 리스트 생성
 summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
 ########################################################################################
+if len(filtered_df) == 0:
+    st.image('./images/nulldata3.png')
+    if st.button("모니와 대화하러 가기"):
+        st.switch_page("pages/Chatbot.py")
+    st.stop()
 
+else:
 # 메인 헤더
-st.header("학업 스트레스 검사 결과")
-
-try:
+    st.header("학업 스트레스 검사 결과")
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
     st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
 
@@ -109,7 +113,7 @@ try:
     st.write(f"{stressor_icon} {stressor}")
     st.write(f"{stressor_explain}")
 
-   # 스트레스 증상
+# 스트레스 증상
     st.markdown("### 스트레스 증상")
     symptom = summary_list[1].split(':')[0].strip()
     symptom_explain = summary_list[1].split(':')[1].strip() 
@@ -125,16 +129,13 @@ try:
     st.write(f"{coping_icon} {coping}")
     st.write(f"{coping_explain}")
 
- 
+
     st.write("#")
 
     st.subheader("학업 스트레스 점수 추이")
 
     # 라인 차트 시각화
     st.line_chart(df_sorted, x="날짜", y="스트레스 점수")
-   
-except:
-    st.image('./images/nulldata.png')
 
 col1, col2, col3 = st.columns(3)
 with col2:
