@@ -46,6 +46,7 @@ current_date = datetime.now()
 filtered_df = df[(df['user_name'] == user_name) & 
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+filtered_df.reset_index(drop=True, inplace=True)
 
 average_score = filtered_df['average_score']
 percentile = filtered_df['percentile']

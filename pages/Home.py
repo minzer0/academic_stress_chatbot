@@ -45,12 +45,14 @@ current_date = datetime.now()
 filtered_df = df[(df['user_name'] == user_name) & 
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+filtered_df.reset_index(drop=True, inplace=True)
 
 history_df = df[(df['user_name'] == user_name) & 
                 (df['user_id'] == user_id) &
                 (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
 history_df_de = history_df.sort_values(by='date', ascending=False)
+history_df_de.reset_index(drop=True, inplace=True)
 
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
@@ -60,7 +62,7 @@ if len(history_df) == 0:
 else:
     with st.container(border=True):        
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write(f"지난 번 {user_name}님의 점수는 **{history_df_de['average_score'][0]:.2f}**로, 전체 사용자 중 상위 **{history_df_de['percentile'][0]:2f}**%에요.")
+        st.write(f"지난 번 {user_name}님의 점수는 **{history_df_de.loc[0, 'average_score']:.2f}**로, 전체 사용자 중 상위 **{history_df_de.loc[0, 'percentile']:2f}**%에요.")
 
         # 데이터 생성
         np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
@@ -83,7 +85,7 @@ else:
 
         # 특정 영역 강조
         highlight = (
-            alt.Chart(df[df['score'].between(history_df_de['average_score'][0]-0.1, history_df_de['average_score'][0]+0.1)])  # 점수 기준 +/-5 범위
+            alt.Chart(df[df['score'].between(history_df_de.loc[0, 'average_score']-0.1, history_df_de.loc[0, 'average_score']+0.1)])  # 점수 기준 +/-5 범위
             .mark_bar(color='blue')  # 강조 색상 설정
             .encode(
                 x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
@@ -97,7 +99,7 @@ else:
         # 차트 렌더링
         st.altair_chart(final_chart, use_container_width=True)
 
-    summary = history_df_de.loc['summary'][0]
+    summary = history_df_de.loc[0, 'summary']
     summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
 
     with st.container():

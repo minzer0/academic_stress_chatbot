@@ -42,8 +42,10 @@ history_df = df[(df['user_name'] == user_name) &
 
 history_df_as = history_df.sort_values(by='date', ascending=True)
 history_df_as.rename(columns={"date": "날짜", "average_score": "스트레스 점수"}, inplace=True)
+history_df_as.reset_index(drop=True, inplace=True)
 
 history_df_de = history_df.sort_values(by='date', ascending=False)
+history_df_de.reset_index(drop=True, inplace=True)
 
 ########################################################################################
 
