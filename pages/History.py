@@ -34,7 +34,7 @@ with tabs[0]:
 
     col1, col2, col3 = st.columns(3)
     with col2:
-        main_button = st.button(label = "🏠   메인 화면으로 돌아가기", key=0)
+        main_button = st.button(label = "🏠   홈 화면으로 돌아가기", key=0)
         if main_button:
             st.switch_page("pages/Home.py")
 
@@ -46,7 +46,7 @@ with tabs[1]:
     for i in range(len(df_sorted)):
         # f-string 내부의 인용 부호 수정
         with st.expander(label=f"{df_sorted.loc[i, '날짜']} : {df_sorted.loc[i, '대화 주요 내용']}"):
-            st.metric(label="학업 스트레스 총점", value=df_sorted.loc[i, '스트레스 점수'], )
+            st.metric(label="학업 스트레스 총점", value= f"{df_sorted.loc[i, '스트레스 점수']:.2f}", )
 
             st.write("스트레스 원인:")
             st.write(f"- {df_sorted.loc[i, '스트레스 원인']} {stressor_icons.get(df_sorted.loc[i, '스트레스 원인'], '👌')}")
@@ -57,7 +57,7 @@ with tabs[1]:
 
     col1, col2, col3 = st.columns(3)
     with col2:
-        main_button = st.button(label = "🏠   메인 화면으로 돌아가기", key=1)
+        main_button = st.button(label = "🏠   홈 화면으로 돌아가기", key=1)
         if main_button:
             st.switch_page("pages/Home.py")
 
