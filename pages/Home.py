@@ -46,12 +46,14 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['user_id'] == user_id) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
-data_empty = True
+history_df = df[(df['user_name'] == user_name) & 
+                (df['user_id'] == user_id) &
+                (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 
 ########################################################################################
 st.title(f"{user_name}님의 학업 스트레스 지수")
 
-if data_empty:
+if len(history_df) == 0:
     st.image('./images/nulldata.png')
 else:
     with st.container(border=True):        
