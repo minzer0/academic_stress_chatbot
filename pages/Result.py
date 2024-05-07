@@ -53,6 +53,19 @@ percentile = filtered_df.loc[0, 'percentile']
 summary = filtered_df.loc[0, 'summary']
 overall_summary = filtered_df.loc[0, 'overall_summary']
 
+history_df = df[(df['user_name'] == user_name) & 
+                (df['user_id'] == user_id) &
+                (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+
+history_df_as = history_df.sort_values(by='date', ascending=True)
+history_df_as.rename(columns={"date": "날짜", "average_score": "스트레스 점수"}, inplace=True)
+history_df_as.reset_index(drop=True, inplace=True)
+
+today = datetime.now().strftime("%Y-%m-%d")
+new_data = pd.DataFrame({'날짜': [today], '스트레스 점수': [average_score]})
+history_df_as = pd.concat([history_df_as, new_data], ignore_index=True)
+history_df_as.reset_index(drop=True, inplace=True)
+
 ########################################################################################
 if len(filtered_df) == 0:
     st.image('./images/nulldata3.png')
@@ -135,7 +148,7 @@ else:
     st.subheader("학업 스트레스 점수 추이")
 
     # 라인 차트 시각화
-    st.line_chart(df_sorted, x="날짜", y="스트레스 점수")
+    st.line_chart(history_df_as, x="날짜", y="스트레스 점수")
 
 col1, col2, col3 = st.columns(3)
 with col2:
