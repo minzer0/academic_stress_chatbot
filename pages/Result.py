@@ -104,7 +104,7 @@ else:
             # 특정 영역 강조
             highlight = (
                 alt.Chart(df[df['score'].between(average_score-0.1, average_score+0.1)])  # 점수 기준 +/-5 범위
-                .mark_bar(color='blue')  # 강조 색상 설정
+                .mark_bar(color='#ffc8ce')  # 강조 색상 설정
                 .encode(
                     x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
                     y="count()",
