@@ -148,7 +148,10 @@ else:
     st.subheader("학업 스트레스 점수 추이")
 
     # 라인 차트 시각화
-    st.line_chart(history_df_as, x="날짜", y="스트레스 점수")
+    if len(history_df_as) == 1:
+        st.scatter_chart(history_df_as, x="날짜", y="스트레스 점수")
+    else:
+        st.line_chart(history_df_as, x="날짜", y="스트레스 점수")
 
 col1, col2, col3 = st.columns(3)
 with col2:
