@@ -152,8 +152,8 @@ def summary(context):
     {context}
 
     Your response must follow the format below:
-    치열한 경쟁: 강한 경쟁으로 인해 스트레스를 느끼고 있습니다.\n
-    수면 장애: 시험기간이 다가오면서 잠을 제대로 못 자고 있습니다.\n
+    치열한 경쟁: 강한 경쟁으로 인해 스트레스를 느끼고 있습니다.
+    수면 장애: 시험기간이 다가오면서 잠을 제대로 못 자고 있습니다.
     능동적 대응: 스트레스를 해소하기 위해 능동적으로 대처하고 있습니다.
 
     You must answer in Korean.
