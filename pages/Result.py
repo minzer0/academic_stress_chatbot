@@ -48,10 +48,10 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 filtered_df.reset_index(drop=True, inplace=True)
 
-average_score = filtered_df['average_score']
-percentile = filtered_df['percentile']
-summary = filtered_df['summary']
-overall_summary = filtered_df['overall_summary']
+average_score = filtered_df.loc[0, 'average_score']
+percentile = filtered_df.loc[0, 'percentile']
+summary = filtered_df.loc[0, 'summary']
+overall_summary = filtered_df.loc[0, 'overall_summary']
 
 ########################################################################################
 if len(filtered_df) == 0:
