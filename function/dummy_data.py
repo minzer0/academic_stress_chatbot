@@ -2,9 +2,9 @@ import pandas as pd
 import random
 import datetime as dt
 
-from result_dictionary import stressor_icons
-from result_dictionary import symptoms_icons
-from result_dictionary import coping_icons
+from function.result_dictionary import stressor_icons
+from function.result_dictionary import symptoms_icons
+from function.result_dictionary import coping_icons
 
 random.seed = 10
 # 임의의 날짜 생성 (지난 10일 동안의 날짜)

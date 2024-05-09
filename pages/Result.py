@@ -5,13 +5,13 @@ from st_supabase_connection import SupabaseConnection
 import altair as alt
 import numpy as np
 
-from result_dictionary import stressor_icons
-from result_dictionary import symptoms_icons
-from result_dictionary import coping_icons
-from menu import menu
+from function.result_dictionary import stressor_icons
+from function.result_dictionary import symptoms_icons
+from function.result_dictionary import coping_icons
+from function.menu import menu
 
 # from backend import average_score, percentile, summary, overall_summary
-from dummy_data import df_sorted
+from function.dummy_data import df_sorted
 
 #######################################################################################
 # SETUP

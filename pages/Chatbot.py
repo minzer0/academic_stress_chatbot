@@ -1,6 +1,6 @@
 from openai import OpenAI
 import streamlit as st
-from menu import menu# import os
+from function.menu import menu# import os
 
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
