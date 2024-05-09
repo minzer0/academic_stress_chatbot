@@ -3,7 +3,8 @@ from function.result_dictionary import stressor_icons
 from function.result_dictionary import symptoms_icons
 from function.result_dictionary import coping_icons
 from function.menu import menu
-from function.dummy_data import df_sorted
+
+# from function.dummy_data import df_sorted
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 import pandas as pd

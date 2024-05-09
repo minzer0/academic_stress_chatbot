@@ -2,9 +2,6 @@ import os
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
 
-# FOR LOCAL
-from function.menu import menu
-
 ########################################################################################
 # SETUP 
 
@@ -59,6 +56,3 @@ st.markdown(
     "</div>",
     unsafe_allow_html=True
 )
-
-
-menu()

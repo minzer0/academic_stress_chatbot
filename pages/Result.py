@@ -11,7 +11,7 @@ from function.result_dictionary import coping_icons
 from function.menu import menu
 
 # from backend import average_score, percentile, summary, overall_summary
-from function.dummy_data import df_sorted
+from dummy_data import df_sorted
 
 #######################################################################################
 # SETUP

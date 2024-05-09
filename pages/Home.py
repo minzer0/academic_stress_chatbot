@@ -5,10 +5,10 @@ import pandas as pd
 from function.menu import menu
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
+# import matplotlib.pyplot as plt
+# from wordcloud import WordCloud
 
-from function.dummy_data import df_sorted
+# from function.dummy_data import df_sorted
 from function.result_dictionary import stressor_icons
 from function.result_dictionary import symptoms_icons
 from function.result_dictionary import coping_icons
