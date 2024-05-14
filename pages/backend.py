@@ -29,22 +29,21 @@ waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니�
                 "상상관 4층에는 곱등이가 산다는 소문이 있습니다 😮", "인공지능응용학과 만세! 최고! 😍",
                 "유박사 팀은 이번 여름에 학사 졸업합니다 🎉"]
 def spinner_text(i):
-    message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
-    message_holder.markdown(
-        message_ui,
-        unsafe_allow_html=True,
-    )        
-    time.sleep(2)
-
-# 스피너와 함께 메시지 표시
-with st.spinner('딱 10초만 기다려주세요!'):
-    # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
-    message_holder = st.empty()
-    message_holder.markdown("#")
-    message_holder.markdown("#")
-    spinner_text(0)
+    # 스피너와 함께 메시지 표시
+    with st.spinner('딱 10초만 기다려주세요!'):
+        # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
+        message_holder = st.empty()
+        message_holder.markdown("#")
+        message_holder.markdown("#")
+        message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
+        message_holder.markdown(
+            message_ui,
+            unsafe_allow_html=True,
+        )
+        time.sleep(2)
 
 
+spinner_text(0)
 
 ########################################################################################
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
