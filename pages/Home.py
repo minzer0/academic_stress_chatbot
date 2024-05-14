@@ -83,19 +83,6 @@ coping_explain = summary_list[2].split(':')[1].strip()
 coping_icon = coping_icons.get(coping, '👌')
 
 
-# stressor_list = []
-# symptom_list = []
-# coping_list = []
-# for index, row in history_df_de.iterrows():
-#     summary = row['summary']
-#     summary_items = [sentence.strip() for sentence in summary.split('\n') if sentence]  # 각 줄을 분리하고 공백 제거
-#     stressor_part = summary_items[0].split(':')[0].strip()
-#     symptom_part  = summary_items[1].split(':')[0].strip()
-#     coping_part  = summary_items[2].split(':')[0].strip()
-#     stressor_list.append(stressor_part)
-#     symptom_list.append(symptom_part)
-#     coping_list.append(coping_part)
-
 data_empty = False
 if len(history_df) == 0:
     data_empty = True
@@ -141,32 +128,10 @@ import os
 
 font_path = "./Fonts/GmarketSansTTFMedium.ttf"
 with st.container():
-    st.subheader(f"[{history_df_de.loc[0, 'Date']}] 가장 최근에 측정한 학업 스트레스의...")
-
-    # def wordcolud_show(text):
-    #     wordcloud = WordCloud(width=200, height=200,
-    #                         background_color="#fffffb",
-    #                         max_words=20,
-    #                         contour_width=3,
-    #                         contour_color='Set2',
-    #                         font_path=font_path).generate(text)     
-    #     # Display the generated image:
-    #     plt.figure(figsize=(10, 5))
-    #     plt.imshow(wordcloud, interpolation='bilinear')
-    #     plt.axis("off")
-    #     st.pyplot(plt)
+    st.subheader(f"[{history_df_de.loc[0, 'date']}] 가장 최근에 측정한 학업 스트레스의...")
 
     # 스트레스 원인
     cols = st.columns(3)
-    # with cols[0]:
-    #     st.write("원인은")
-    #     wordcolud_show(', '.join([stressor.replace(' ', '') for stressor in stressor_list]))
-    # with cols[1]:
-    #     st.write("증상은")
-    #     wordcolud_show(', '.join([stressor.replace(' ', '') for stressor in symptom_list]))
-    # with cols[2]:
-    #     st.write("대처전략은")
-    #     wordcolud_show(', '.join([stressor.replace(' ', '') for stressor in coping_list]))
     with st.expander(f"학업 스트레스의 원인: {stressor_icon} {stressor}"):
         st.write(stressor_explain)
     
