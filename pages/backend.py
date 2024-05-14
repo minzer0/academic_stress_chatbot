@@ -7,6 +7,7 @@ from openai import OpenAI
 import csv
 from scipy.stats import norm
 import re
+import time
 
 ########################################################################################
 # SETUP 
@@ -21,8 +22,30 @@ with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
-st.title("결과 분석 중입니다...🔍\n 쪼꼼만 기다려주이소~~>< \n 오래 걸려도 이해해 줄 수 있지예~~?❤️❤️❤️")
+st.title("결과 분석 중입니다...🔍\n")
 
+# 메시지를 담고 있는 리스트
+waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니다 ❤️", "고민모니라는 이름은 ChatGPT가 지어줬습니다", 
+                "상상관 4층에는 곱등이가 산다는 소문이 있습니다", "인공지능응용학과 만세! 최고!"]
+
+# 스피너와 함께 메시지 표시
+with st.spinner('딱 10초만 기다려주세요!'):
+    # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
+    message_holder = st.empty()
+    
+    while True:
+        # 각 메시지를 5초 간격으로 표시
+        for message in waiting_list:
+            message_holder.markdown("#")
+            message_holder.markdown("#")
+            message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {message} </div>"
+            message_holder.markdown(
+                message_ui,
+                unsafe_allow_html=True,
+            )        
+            time.sleep(6)  # 5초 동안 대기
+            # 큰 타이틀 추가
+        
 
 
 ########################################################################################

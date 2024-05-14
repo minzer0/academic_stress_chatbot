@@ -1,5 +1,6 @@
 from openai import OpenAI
 import streamlit as st
+import time
 
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
@@ -110,6 +111,7 @@ if user_input := st.chat_input():
         ).execute()
         
         if "대화가 종료되었습니다." in assistant_reply:
+            time.sleep(1)
             st.switch_page("pages/backend.py")
 
 menu()

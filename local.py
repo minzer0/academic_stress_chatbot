@@ -7,26 +7,10 @@ from wordcloud import WordCloud
 import matplotlib.font_manager as fm
 import plotly.graph_objects as go
 from streamlit_navigation_bar import st_navbar
+import time
 
 score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
-styles = {
-    "nav" : {
-        "font-family": "Gowun Batang",
-    },
-}
-
-
-options = {
-    "show_menu": False,
-    "show_sidebar": True,
-}
-
-
-page = st_navbar(["고민모니?", "대시보드", "상세보기", "내프로필"],
-                 options=options,
-                 )
-st.write(page)
 
 # .streamlit/style.css 파일 열기
 with open("./.streamlit/style.css", 'rt', encoding='UTF8') as css:
@@ -34,55 +18,27 @@ with open("./.streamlit/style.css", 'rt', encoding='UTF8') as css:
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 
-st.title("결과 분석 중입니다...🔍\n 쪼꼼만 기다려주이소~~>< \n 오래 걸려도 이해해 줄 수 있지예~~?❤️❤️❤️")
+st.title("결과 분석 중입니다...🔍\n")
 
+# 메시지를 담고 있는 리스트
+waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니다 ❤️", "고민모니라는 이름은 ChatGPT가 지어줬습니다", 
+                "상상관 4층에는 곱등이가 산다는 소문이 있습니다", "인공지능응용학과 만세! 최고!"]
 
-def score_classification(score):
-    for idx, upper_bound in enumerate(score_ranges):
-        if score <= upper_bound:
-            return idx
+# 스피너와 함께 메시지 표시
+with st.spinner('딱 10초만 기다려주세요!'):
+    # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
+    message_holder = st.empty()
+    
+    while True:
+        # 각 메시지를 5초 간격으로 표시
+        for message in waiting_list:
+            message_holder.markdown("#")
+            message_holder.markdown("#")
+            message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {message} </div>"
+            message_holder.markdown(
+                message_ui,
+                unsafe_allow_html=True,
+            )        
+            time.sleep(6)  # 5초 동안 대기
+            # 큰 타이틀 추가
         
-# 스트림릿 앱 제목
-st.title('학업 스트레스 측정')
-
-# 사용자 입력: 학업 스트레스 점수
-user_score = st.number_input('당신의 학업 스트레스 점수를 입력하세요:', min_value=0, max_value=5, value=5, step=1)
-
-
-# 예시 데이터 생성 (임시로 정규 분포 사용)
-np.random.seed(0)
-dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
-mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
-
-# 사용자 점수의 위치를 백분위로 계산
-percentile = norm.cdf(user_score, mu, std) * 100
-st.write(f'당신의 학업 스트레스 점수는 상위 {100-percentile:.2f}%에 위치합니다.')
-
-# PDF 그래프 생성
-x = np.linspace(min(dummy_scores), max(dummy_scores), 100)
-y = norm.pdf(x, mu, std)  # 확률밀도함수
-
-# Plotly 그래프 생성
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='확률밀도함수', line=dict(color='grey')))
-
-# 사용자 점수 주변 영역 강조
-score_min = user_score - 0.2
-score_max = user_score + 0.2
-x_fill = np.linspace(score_min, score_max, 100)
-y_fill = norm.pdf(x_fill, mu, std)
-
-
-stress_color = ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
-
-part_color = stress_color[score_classification(user_score)]
-fig.add_trace(go.Scatter(x=x_fill, y=y_fill, fill='tozeroy', mode='none', name='당신의 스트레스 수치',
-                          fillcolor=part_color, opacity=0.3))
-
-fig.update_layout(xaxis_title='학업 스트레스 점수',
-                  yaxis_title='Probability Density',
-                  legend_title='범례')
-
-st.plotly_chart(fig, use_container_width=True)
-
-

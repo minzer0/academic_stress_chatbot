@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
 
 
-
-
 /* 특정 Streamlit 클래스에 대한 글씨 크기 조정 */
 [class^=st-emotion] {
     font-family: "Gowun Batang", sans-serif !important;

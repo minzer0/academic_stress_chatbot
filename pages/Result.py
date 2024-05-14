@@ -123,12 +123,33 @@ else:
                         legend_title='범례')
         st.plotly_chart(fig, use_container_width=True)
 
-        score_img_list = ["고민이모니", "이정도는", "인생이", "조금지쳐", "폭발직전"]
+        st.subheader("학업 스트레스 점수 추이")
         
-        score_img_path = f"./images/스트레스 수치/스트레스_{score_img_list[score_classification(average_score)]}.png"
-        st.image(score_img_path)
+        # 데이터프레임을 Altair에 맞게 변환
+        base_chart = alt.Chart(history_df_as).mark_line(point=True).encode(
+            x='date:T',
+            y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
+            color=alt.value("#000000")
+        )
 
+        # 구간별 척도 가로선 추가
+        rule_data = pd.DataFrame({
+            '학업 스트레스 단계': score_ranges,
+            '구간': range_labels, 
+            '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
 
+        })
+
+        rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+            y='학업 스트레스 단계:Q',
+            color=alt.Color('색상:N', scale=None)
+        )
+
+        final_chart = base_chart + rule_chart 
+
+        st.altair_chart(final_chart, use_container_width=True)
+        st.image('./images/스트레스 수치/스트레스5단계.png')
+    
     # 스트레스 원인 정보
     st.markdown("### 스트레스 원인")
     stressor = summary_list[0].split(':')[0].strip()
@@ -156,41 +177,7 @@ else:
 
     st.write("#")
 
-    st.subheader("학업 스트레스 점수 추이")
 
-    # 라인 차트 시각화
-    if len(history_df_as) == 1:
-        st.scatter_chart(history_df_as, x="날짜", y="스트레스 점수", color='#ffc8ce')
-    else:
-        st.line_chart(history_df_as, x="날짜", y="스트레스 점수", color='#ffc8ce')
-
-with st.container(border=True):
-    st.subheader("학업 스트레스 수치")
-    
-    # 데이터프레임을 Altair에 맞게 변환
-    base_chart = alt.Chart(history_df_as).mark_line(point=True).encode(
-        x='date:T',
-        y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
-        color=alt.value("#000000")
-    )
-
-    # 구간별 척도 가로선 추가
-    rule_data = pd.DataFrame({
-        '학업 스트레스 단계': score_ranges,
-        '구간': range_labels, 
-        '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
-
-    })
-
-    rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
-        y='학업 스트레스 단계:Q',
-        color=alt.Color('색상:N', scale=None)
-    )
-
-    final_chart = base_chart + rule_chart 
-
-    st.altair_chart(final_chart, use_container_width=True)
-    st.image('./images/스트레스 수치/스트레스5단계.png')
 
 
 col1, col2, col3 = st.columns(3)
