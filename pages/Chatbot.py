@@ -31,8 +31,8 @@ if "user_id" not in st.session_state:
 user_id = st.session_state["user_id"]
 user_name = st.session_state["user_metadata"]["user_name"]
 
-st.markdown("<h1 style='font-family:Nanum Gothic;'>모니와 대화하기💭</h1>", unsafe_allow_html=True)
-st.caption("👯 Academic Stress Assessment Chatbot produced by 유박사 👯")
+st.markdown("# 모니와 대화하기💭", unsafe_allow_html=True)
+# st.caption("👯 Academic Stress Assessment Chatbot produced by 유박사 👯")
 
 main_button = st.button(label = "🚨   대화 중단하고 홈 화면으로 돌아가기")
 if main_button:

@@ -78,13 +78,14 @@ else:
         for idx, upper_bound in enumerate(score_ranges):
             if score <= upper_bound:
                 return idx
-                
+    
+    st.markdown("# 학업 스트레스 측정 결과")          
     with st.container(border=True):
+        st.subheader("학업 스트레스 수치 비교")
         # 평탄화된 리스트 생성
         summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
-        st.header("학업 스트레스 검사 결과")
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
+        st.write(f"{user_name}님의 점수는 {average_score: .2f}/5.0로, 100명 중 **{percentile}**째로 스트레스가 많아요.")
 
         # 데이터 생성
         np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
