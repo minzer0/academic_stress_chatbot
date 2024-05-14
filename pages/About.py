@@ -1,6 +1,11 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 
+# .streamlit/style.css 파일 열기
+with open("./.streamlit/style.css") as css:
+    # CSS 파일을 읽어와서 스타일 적용
+    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+
 
 page = st_navbar(["고민모니?", "대시보드", "상세보기",  "로그아웃"], selected="고민모니?")
 
