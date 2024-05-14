@@ -103,65 +103,65 @@ range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조�
 
 ########################################################################################
 
-st.header("학업 스트레스 측정 요약")
-with st.container(border=True):
-    st.subheader("학업 스트레스 수치")
-    
-    # 데이터프레임을 Altair에 맞게 변환
-    base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
-        x='date:T',
-        y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
-        color=alt.value("#000000")
-    )
+if page == "대시보드":
+    st.header("학업 스트레스 측정 요약")
+    with st.container(border=True):
+        st.subheader("학업 스트레스 수치")
+        
+        # 데이터프레임을 Altair에 맞게 변환
+        base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+            x='date:T',
+            y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
+            color=alt.value("#000000")
+        )
 
-    # 구간별 척도 가로선 추가
-    rule_data = pd.DataFrame({
-        '학업 스트레스 단계': score_ranges,
-        '구간': range_labels, 
-        '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+        # 구간별 척도 가로선 추가
+        rule_data = pd.DataFrame({
+            '학업 스트레스 단계': score_ranges,
+            '구간': range_labels, 
+            '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
 
-    })
+        })
 
-    rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
-        y='학업 스트레스 단계:Q',
-        color=alt.Color('색상:N', scale=None)
-    )
+        rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+            y='학업 스트레스 단계:Q',
+            color=alt.Color('색상:N', scale=None)
+        )
 
-    final_chart = base_chart + rule_chart 
+        final_chart = base_chart + rule_chart 
 
-    st.altair_chart(final_chart, use_container_width=True)
-    st.image('./images/스트레스 수치/스트레스5단계.png')
+        st.altair_chart(final_chart, use_container_width=True)
+        st.image('./images/스트레스 수치/스트레스5단계.png')
 
-with st.container():
-    st.subheader("가장 최근에 측정한 학업 스트레스의...")
-    
-    stressor_list = '손톱뜯기, 손톱뜯기, 피로'
+    with st.container():
+        st.subheader("가장 최근에 측정한 학업 스트레스의...")
+        
+        stressor_list = '손톱뜯기, 손톱뜯기, 피로'
 
-    # def wordcolud_show(text):
-    #     wordcloud = WordCloud(width=200, height=200,
-    #                         background_color='white',
-    #                         max_words=20,
-    #                         contour_width=3,
-    #                         contour_color='Set2',
-    #                         font_path=path).generate(text)     
-    #     # Display the generated image:
-    #     plt.imshow(wordcloud, interpolation='bilinear')
-    #     plt.axis("off")
-    #     plt.show()
-    #     st.pyplot(plt)
+        # def wordcolud_show(text):
+        #     wordcloud = WordCloud(width=200, height=200,
+        #                         background_color='white',
+        #                         max_words=20,
+        #                         contour_width=3,
+        #                         contour_color='Set2',
+        #                         font_path=path).generate(text)     
+        #     # Display the generated image:
+        #     plt.imshow(wordcloud, interpolation='bilinear')
+        #     plt.axis("off")
+        #     plt.show()
+        #     st.pyplot(plt)
 
-    # 스트레스 원인
-    cols = st.columns(3)
-    with cols[0]:
-        st.write("학업 스트레스 원인 키워드")
-        # wordcolud_show(stressor_list)
-    with cols[1]:
-        st.write("학업 스트레스 증상 키워드")
-        # wordcolud_show(stressor_list)
-    with cols[2]:
-        st.write("학업 스트레스 대처전략 키워드")
-        # wordcolud_show(stressor_list)
-
+        # 스트레스 원인
+        cols = st.columns(3)
+        with cols[0]:
+            st.write("학업 스트레스 원인 키워드")
+            # wordcolud_show(stressor_list)
+        with cols[1]:
+            st.write("학업 스트레스 증상 키워드")
+            # wordcolud_show(stressor_list)
+        with cols[2]:
+            st.write("학업 스트레스 대처전략 키워드")
+            # wordcolud_show(stressor_list)
 
 if page == "상세보기":
     st.switch_page("pages/History.py")
