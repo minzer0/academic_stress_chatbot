@@ -27,3 +27,7 @@ button[data-baseweb="tab"] {
 button[aria-selected="true"] {
     background-color: #CDE8E1;
 }
+
+
+#MainMenu {visibility: hidden; }
+footer {visibility: hidden;}
