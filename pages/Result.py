@@ -12,7 +12,6 @@ from function.result_dictionary import symptoms_icons
 from function.result_dictionary import coping_icons
 from function.menu import menu
 
-from Home import history_df_de, range_labels
 
 #######################################################################################
 # SETUP
@@ -67,6 +66,7 @@ new_data = pd.DataFrame({'날짜': [today], '스트레스 점수': [average_scor
 history_df_as = pd.concat([history_df_as, new_data], ignore_index=True)
 history_df_as.reset_index(drop=True, inplace=True)
 
+range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조금지쳐", "폭발직전"]
 ########################################################################################
 if len(filtered_df) == 0:
     st.image('./images/nulldata3.png')
@@ -168,7 +168,7 @@ with st.container(border=True):
     st.subheader("학업 스트레스 수치")
     
     # 데이터프레임을 Altair에 맞게 변환
-    base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+    base_chart = alt.Chart(history_df_as).mark_line(point=True).encode(
         x='date:T',
         y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
         color=alt.value("#000000")
