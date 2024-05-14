@@ -4,14 +4,13 @@ from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 import altair as alt
 import numpy as np
+from scipy.stats import norm
+import plotly.graph_objects as go
 
 from function.result_dictionary import stressor_icons
 from function.result_dictionary import symptoms_icons
 from function.result_dictionary import coping_icons
 from function.menu import menu
-
-# from backend import average_score, percentile, summary, overall_summary
-from dummy_data import df_sorted
 
 #######################################################################################
 # SETUP
@@ -80,42 +79,51 @@ else:
     st.header("학업 스트레스 검사 결과")
     # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
     st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
+    
+    score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
+    def score_classification(score):
+        for idx, upper_bound in enumerate(score_ranges):
+            if score <= upper_bound:
+                return idx
+                
     with st.container(border=True):        
-            # 데이터 생성
-            np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
-            n_samples = 100  # 샘플 수
+        # 데이터 생성
+        np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
+        dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
+        mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
 
-            # 정규분포 데이터 생성
-            data = np.random.normal(3.773399014778325, 0.9273521676028207, n_samples)
-            df = pd.DataFrame(data, columns=['score'])
+        # PDF 그래프 생성
+        x = np.linspace(min(dummy_scores), max(dummy_scores), 100)
+        y = norm.pdf(x, mu, std)  # 확률밀도함수
 
-            # 히스토그램 생성
-            base_histogram = (
-                alt.Chart(df)
-                .mark_bar()
-                .encode(
-                    x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),  # 5점 간격으로 분할
-                    y="count()",
-                    color=alt.value("lightgray")
-                )
-            )
+        # Plotly 그래프 생성
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='확률밀도함수', line=dict(color='grey')))
 
-            # 특정 영역 강조
-            highlight = (
-                alt.Chart(df[df['score'].between(average_score-0.1, average_score+0.1)])  # 점수 기준 +/-5 범위
-                .mark_bar(color='#ffc8ce')  # 강조 색상 설정
-                .encode(
-                    x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
-                    y="count()",
-                )
-            )
+        # 사용자 점수 주변 영역 강조
+        score_min = average_score - 0.2
+        score_max = average_score + 0.2
+        x_fill = np.linspace(score_min, score_max, 100)
+        y_fill = norm.pdf(x_fill, mu, std)
 
-            # 히스토그램과 강조 영역 결합
-            final_chart = base_histogram + highlight
 
-            # 차트 렌더링
-            st.altair_chart(final_chart, use_container_width=True)
+        stress_color = ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+
+        part_color = stress_color[score_classification(average_score)]
+        fig.add_trace(go.Scatter(x=x_fill, y=y_fill, fill='tozeroy', mode='none', name='당신의 스트레스 수치',
+                                fillcolor=part_color, opacity=0.3))
+
+        fig.update_layout(title='학업 스트레스 점수의 PDF',
+                        xaxis_title='학업 스트레스 점수',
+                        yaxis_title='확률밀도함수',
+                        legend_title='범례')
+        st.plotly_chart(fig, use_container_width=True)
+
+        score_img_list = ["고민이모니", "이정도는", "인생이", "조금지쳐", "폭발직전"]
+        
+        score_img_path = f"./images/스트레스 수치/스트레스_{score_img_list[score_classification(average_score)]}.png"
+        st.image(score_img_path)
 
 
     # 스트레스 원인 정보

@@ -90,7 +90,7 @@ else:
                     return idx
                 
         # 예시 데이터 생성
-        # np.random.seed(0)
+        np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
         dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
         mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
 
@@ -117,7 +117,7 @@ else:
 
         fig.update_layout(title='학업 스트레스 점수의 PDF',
                         xaxis_title='학업 스트레스 점수',
-                        yaxis_title='Probability Density',
+                        yaxis_title='확률밀도함수',
                         legend_title='범례')
         st.plotly_chart(fig, use_container_width=True)
 
