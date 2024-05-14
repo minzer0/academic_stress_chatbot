@@ -7,7 +7,7 @@ from st_supabase_connection import SupabaseConnection
 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-from streamlit_navigation_bar import st_navbar
+from function.menu import menu
 import pages.Profile as pg
 import matplotlib.font_manager as fm
 
@@ -23,27 +23,6 @@ st.set_page_config(
     page_icon = "./images/logo.png",
     initial_sidebar_state="collapsed",
 )
-
-options = {
-    "show_menu": False,
-    "show_sidebar": True,
-}
-page = st_navbar(["소개", "대시보드", "상세보기", "모니와대화", "로그아웃"], selected="대시보드", options=options,)
-
-if page == "소개":
-    st.switch_page("pages/About.py")
-
-# if page == "대시보드":
-#     st.switch_page("pages/Home.py")
-
-if page == "상세보기":
-    st.switch_page("pages/History.py")
-
-if page == "모니와대화":
-    st.switch_page("pages/Chatbot.py")
-
-if page == "로그아웃":
-    st.switch_page("app.py")
 
 #######################################################################################
 # .streamlit/style.css 파일 열기
@@ -162,7 +141,7 @@ import os
 
 font_path = "./Fonts/GmarketSansTTFMedium.ttf"
 with st.container():
-    st.subheader("가장 최근에 측정한 학업 스트레스의...")
+    st.subheader(f"[{history_df_de.loc[0, 'Date']}] 가장 최근에 측정한 학업 스트레스의...")
 
     # def wordcolud_show(text):
     #     wordcloud = WordCloud(width=200, height=200,
@@ -201,3 +180,5 @@ st.write("#")
 if st.button(":left_speech_bubble:   모니와 대화하며 \n :red[**새로운 학업 스트레스 측정**하기]",
             use_container_width=True, ):
     st.switch_page("pages/Chatbot.py")
+
+menu()

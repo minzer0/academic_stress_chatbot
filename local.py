@@ -10,11 +10,12 @@ from streamlit_navigation_bar import st_navbar
 
 score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
-# styles = {
-#     "nav" : {
-#         "font-family": "Gowun Batang",
-#     },
-# }
+styles = {
+    "nav" : {
+        "font-family": "Gowun Batang",
+    },
+}
+
 
 options = {
     "show_menu": False,
@@ -31,6 +32,10 @@ st.write(page)
 with open("./.streamlit/style.css", 'rt', encoding='UTF8') as css:
     # CSS 파일을 읽어와서 스타일 적용
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+
+
+st.title("결과 분석 중입니다...🔍\n 쪼꼼만 기다려주이소~~>< \n 오래 걸려도 이해해 줄 수 있지예~~?❤️❤️❤️")
+
 
 def score_classification(score):
     for idx, upper_bound in enumerate(score_ranges):
@@ -81,43 +86,3 @@ fig.update_layout(xaxis_title='학업 스트레스 점수',
 st.plotly_chart(fig, use_container_width=True)
 
 
-
-
-sys_font = fm.findSystemFonts()
-nanum_fonts = [f for f in sys_font if 'Nanum' in f]
-
-word_list = '손톱뜯기, 손톱뜯기, 피로'
-
-from matplotlib import rc
-rc('font', family='NanumGothic')
-
-wordcloud = WordCloud(width=800, height=800,
-                      background_color='white',
-                      max_words=200,
-                      contour_width=3,
-                      contour_color='steelblue',
-                      font_path='malgun.ttf').generate(' '.join(word_list))
-
-plt.figure(figsize=(10, 10))
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis('off')
-plt.show()
-
-cols = st.columns(3)
-
-text = 'Fun, fun, awesome, awesome, tubular, astounding, superb, great, amazing, amazing, amazing, amazing'
-
-with cols[1]:
-    # Create and generate a word cloud image:
-    wordcloud = WordCloud(width=200, height=200,
-                        background_color='white',
-                        max_words=20,
-                        contour_width=3,
-                        contour_color='Set2',
-                        ).generate(word_list)
-
-    # Display the generated image:
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
-    st.pyplot(plt)
