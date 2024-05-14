@@ -5,29 +5,5 @@
     font-family: "Gowun Batang", sans-serif !important;
 }
 
-
-/* button[data-baseweb="tab-list"] {
-    gap: 2px;
-}
-
-button[data-baseweb="tab"] {
-    font-size: 30px;
-    margin: 0;
-    width: 100%;
-    
-    height: 50px;
-    white-space: pre-wrap;
-    background-color: #fffffb;
-    border-radius: 4px 4px 0px 0px;
-    gap: 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-button[aria-selected="true"] {
-    background-color: #CDE8E1;
-}
- */
-
 #MainMenu {visibility: hidden; }
 footer {visibility: hidden;}
