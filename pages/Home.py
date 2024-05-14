@@ -8,7 +8,7 @@ from st_supabase_connection import SupabaseConnection
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from streamlit_navigation_bar import st_navbar
-import pages as pg
+import pages.Profile as pg
 import matplotlib.font_manager as fm
 
 from function.result_dictionary import stressor_icons
@@ -28,8 +28,6 @@ st.set_page_config(
 with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
-
-page = st_navbar(["대시보드", "상세보기", "고민모니?", "내프로필"])
 
 
 sys_font = fm.findSystemFonts()
@@ -101,74 +99,76 @@ range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조�
 
 
 ########################################################################################
-if page == "대시보드":
-    st.header("학업 스트레스 측정 요약")
-    with st.container(border=True):
-        st.subheader("학업 스트레스 수치")
-        
-        # 데이터프레임을 Altair에 맞게 변환
-        base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
-            x='date:T',
-            y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
-            color=alt.value("#000000")
-        )
-
-        # 구간별 척도 가로선 추가
-        rule_data = pd.DataFrame({
-            '학업 스트레스 단계': score_ranges,
-            '구간': range_labels, 
-            '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
-
-        })
-
-        rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
-            y='학업 스트레스 단계:Q',
-            color=alt.Color('색상:N', scale=None)
-        )
-
-        final_chart = base_chart + rule_chart 
-
-        st.altair_chart(final_chart, use_container_width=True)
-        st.image('./images/스트레스 수치/스트레스5단계.png')
-
-    with st.container():
-        st.subheader("가장 최근에 측정한 학업 스트레스의...")
-        
-        stressor_list = '손톱뜯기, 손톱뜯기, 피로'
-
-        # def wordcolud_show(text):
-        #     wordcloud = WordCloud(width=200, height=200,
-        #                         background_color='white',
-        #                         max_words=20,
-        #                         contour_width=3,
-        #                         contour_color='Set2',
-        #                         font_path=path).generate(text)     
-        #     # Display the generated image:
-        #     plt.imshow(wordcloud, interpolation='bilinear')
-        #     plt.axis("off")
-        #     plt.show()
-        #     st.pyplot(plt)
-
-        # 스트레스 원인
-        cols = st.columns(3)
-        with cols[0]:
-            st.write("학업 스트레스 원인 키워드")
-            # wordcolud_show(stressor_list)
-        with cols[1]:
-            st.write("학업 스트레스 증상 키워드")
-            # wordcolud_show(stressor_list)
-        with cols[2]:
-            st.write("학업 스트레스 대처전략 키워드")
-            # wordcolud_show(stressor_list)
+page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="대시보드")
 
 if page == "상세보기":
-    st.switch_page("pages/Home.py")
+    st.switch_page("pages/Hisotry.py")
 
 if page == "고민모니?":
     st.switch_page("pages/About.py")
 
 if page == "내프로필":
-    st.write("프로필")
+    st.switch_page("pages/Profile.py")
+
+#######################################################################################
+st.header("학업 스트레스 측정 요약")
+with st.container(border=True):
+    st.subheader("학업 스트레스 수치")
+    
+    # 데이터프레임을 Altair에 맞게 변환
+    base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+        x='date:T',
+        y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
+        color=alt.value("#000000")
+    )
+
+    # 구간별 척도 가로선 추가
+    rule_data = pd.DataFrame({
+        '학업 스트레스 단계': score_ranges,
+        '구간': range_labels, 
+        '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+
+    })
+
+    rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+        y='학업 스트레스 단계:Q',
+        color=alt.Color('색상:N', scale=None)
+    )
+
+    final_chart = base_chart + rule_chart 
+
+    st.altair_chart(final_chart, use_container_width=True)
+    st.image('./images/스트레스 수치/스트레스5단계.png')
+
+with st.container():
+    st.subheader("가장 최근에 측정한 학업 스트레스의...")
+    
+    stressor_list = '손톱뜯기, 손톱뜯기, 피로'
+
+    # def wordcolud_show(text):
+    #     wordcloud = WordCloud(width=200, height=200,
+    #                         background_color='white',
+    #                         max_words=20,
+    #                         contour_width=3,
+    #                         contour_color='Set2',
+    #                         font_path=path).generate(text)     
+    #     # Display the generated image:
+    #     plt.imshow(wordcloud, interpolation='bilinear')
+    #     plt.axis("off")
+    #     plt.show()
+    #     st.pyplot(plt)
+
+    # 스트레스 원인
+    cols = st.columns(3)
+    with cols[0]:
+        st.write("학업 스트레스 원인 키워드")
+        # wordcolud_show(stressor_list)
+    with cols[1]:
+        st.write("학업 스트레스 증상 키워드")
+        # wordcolud_show(stressor_list)
+    with cols[2]:
+        st.write("학업 스트레스 대처전략 키워드")
+        # wordcolud_show(stressor_list)
 
 
 st.write("#")
