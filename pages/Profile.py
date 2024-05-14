@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 
-page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="내프로필?")
+page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="내프로필")
 
 if page == "상세보기":
     st.switch_page("pages/Hisotry.py")

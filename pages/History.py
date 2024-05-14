@@ -57,7 +57,7 @@ score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 
-page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="고민모니?")
+page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="상세보기")
 
 if page == "고민모니?":
     st.switch_page("pages/About.py")
