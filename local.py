@@ -94,7 +94,7 @@ with cols[1]:
                         max_words=20,
                         contour_width=3,
                         contour_color='Set2',
-                        font_path=path).generate(word_list)
+                        ).generate(word_list)
 
     # Display the generated image:
     plt.imshow(wordcloud, interpolation='bilinear')

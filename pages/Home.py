@@ -171,7 +171,7 @@ if page == "고민모니?":
     pg.about()
 
 if page == "내프로필":
-    st.write("내프로필")
+    st.write("프로필")
 
 
 st.write("#")
