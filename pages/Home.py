@@ -2,28 +2,26 @@ import streamlit as st
 import numpy as np
 import altair as alt
 import pandas as pd
-from function.menu import menu
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from streamlit_navigation_bar import st_navbar
+import pages as pg
 import matplotlib.font_manager as fm
 
-# from function.dummy_data import df_sorted
 from function.result_dictionary import stressor_icons
 from function.result_dictionary import symptoms_icons
 from function.result_dictionary import coping_icons
-
-# from Result import stressor, stressor_icon, symptom, symptom_icon, coping, coping_icon
 
 ########################################################################################
 ### UI SETUP 
 
 st.set_page_config(
     page_title = "고민모니",
-    page_icon = "./images/logo.png"
+    page_icon = "./images/logo.png",
+    initial_sidebar_state="collapsed"
 )
 
 # .streamlit/style.css 파일 열기
@@ -31,7 +29,8 @@ with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
-page = st_navbar(["고민모니?", "대시보드", "상세보기", "내프로필"])
+page = st_navbar(["대시보드", "상세보기", "고민모니?", "내프로필"])
+
 
 sys_font = fm.findSystemFonts()
 nanum_fonts = [f for f in sys_font if 'Nanum' in f]
@@ -102,8 +101,7 @@ range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조�
 
 
 ########################################################################################
-
-if page == "대시보드":
+def dashboard():
     st.header("학업 스트레스 측정 요약")
     with st.container(border=True):
         st.subheader("학업 스트레스 수치")
@@ -163,12 +161,14 @@ if page == "대시보드":
             st.write("학업 스트레스 대처전략 키워드")
             # wordcolud_show(stressor_list)
 
+if page == "대시보드":
+    dashboard()
+
 if page == "상세보기":
-    st.switch_page("pages/History.py")
+    pg.history()
 
 if page == "고민모니?":
-    st.write("고민모니는 학생들의 학업 스트레스를 개선하기 위해 고안되었어요.")
-    st.image('./images/HAI_logo.png')
+    pg.about()
 
 if page == "내프로필":
     st.write("내프로필")
@@ -178,5 +178,3 @@ st.write("#")
 if st.button(":left_speech_bubble:   모니와 대화하며 \n :red[**새로운 학업 스트레스 측정**하기]",
             use_container_width=True, ):
     st.switch_page("pages/Chatbot.py")
-
-menu()

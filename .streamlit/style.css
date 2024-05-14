@@ -6,7 +6,7 @@
 }
 
 
-button[data-baseweb="tab-list"] {
+/* button[data-baseweb="tab-list"] {
     gap: 2px;
 }
 
@@ -27,7 +27,7 @@ button[data-baseweb="tab"] {
 button[aria-selected="true"] {
     background-color: #CDE8E1;
 }
-
+ */
 
 #MainMenu {visibility: hidden; }
 footer {visibility: hidden;}
