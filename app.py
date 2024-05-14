@@ -20,7 +20,7 @@ st.image('./images/app_img.png')
 
 # 스타일이 적용된 Markdown 출력
 st.markdown("""
-<div style='text-align: center; font-size: 20px;'>
+<div style='text-align: center; font-size: 25px;'>
 당신의 학업 고민을 들려주세요!<br>학업 스트레스 모니터링 챗봇
 </div>
 """, unsafe_allow_html=True)
