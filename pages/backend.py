@@ -12,11 +12,6 @@ import time
 ########################################################################################
 # SETUP 
 
-st.set_page_config(
-    page_title = "고민모니",
-    page_icon = "./images/logo.png"
-)
-
 # .streamlit/style.css 파일 열기
 with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
