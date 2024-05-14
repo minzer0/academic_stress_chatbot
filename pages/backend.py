@@ -22,9 +22,10 @@ with open("./.streamlit/style.css") as css:
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 st.title("결과 분석 중입니다...🔍\n 쪼꼼만 기다려주이소~~>< \n 오래 걸려도 이해해 줄 수 있지예~~?❤️❤️❤️")
+
+
+
 ########################################################################################
-
-
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
 
 # Set OpenAI API key 

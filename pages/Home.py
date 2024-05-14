@@ -24,7 +24,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="대시보드")
+page = st_navbar(["고민모니?", "대시보드", "상세보기",  "로그아웃"], selected="대시보드")
 
 if page == "상세보기":
     st.switch_page("pages/History.py")
@@ -32,8 +32,8 @@ if page == "상세보기":
 if page == "고민모니?":
     st.switch_page("pages/About.py")
 
-if page == "내프로필":
-    st.switch_page("pages/Profile.py")
+if page == "로그아웃":
+    st.switch_page("app.py")
 
 #######################################################################################
 # # .streamlit/style.css 파일 열기
@@ -106,7 +106,7 @@ for index, row in history_df_de.iterrows():
     symptom_part  = summary_items[1].split(':')[0].strip()
     coping_part  = summary_items[2].split(':')[0].strip()
     stressor_list.append(stressor_part)
-    symptom_list.append(coping_part)
+    symptom_list.append(symptom_part)
     coping_list.append(coping_part)
 
 data_empty = False
