@@ -25,20 +25,25 @@ waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니�
                 "상상관 4층에는 곱등이가 산다는 소문이 있습니다", "인공지능응용학과 만세! 최고!"]
 
 # 스피너와 함께 메시지 표시
+
+# 메시지를 담고 있는 리스트
+waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니다 ❤️", "고민모니라는 이름은 ChatGPT가 지어줬습니다 😎", 
+                "상상관 4층에는 곱등이가 산다는 소문이 있습니다 😮", "인공지능응용학과 만세! 최고! 😍",
+                "유박사 팀은 이번 여름에 학사 졸업합니다 🎉"]
+def spinner_text(i):
+    message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
+    message_holder.markdown(
+        message_ui,
+        unsafe_allow_html=True,
+    )        
+    time.sleep(1) 
+# 스피너와 함께 메시지 표시
 with st.spinner('딱 10초만 기다려주세요!'):
     # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
     message_holder = st.empty()
-    
-    while True:
-        # 각 메시지를 5초 간격으로 표시
-        for message in waiting_list:
-            message_holder.markdown("#")
-            message_holder.markdown("#")
-            message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {message} </div>"
-            message_holder.markdown(
-                message_ui,
-                unsafe_allow_html=True,
-            )        
-            time.sleep(6)  # 5초 동안 대기
-            # 큰 타이틀 추가
-        
+    message_holder.markdown("#")
+    message_holder.markdown("#")
+    spinner_text(0)
+
+spinner_text(1)
+spinner_text(2)

@@ -22,6 +22,29 @@ with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
+st.title("결과 분석 중입니다...🔍\n")
+
+# 메시지를 담고 있는 리스트
+waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니다 ❤️", "고민모니라는 이름은 ChatGPT가 지어줬습니다 😎", 
+                "상상관 4층에는 곱등이가 산다는 소문이 있습니다 😮", "인공지능응용학과 만세! 최고! 😍",
+                "유박사 팀은 이번 여름에 학사 졸업합니다 🎉"]
+def spinner_text(i):
+    message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
+    message_holder.markdown(
+        message_ui,
+        unsafe_allow_html=True,
+    )        
+    time.sleep(2)
+
+# 스피너와 함께 메시지 표시
+with st.spinner('딱 10초만 기다려주세요!'):
+    # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
+    message_holder = st.empty()
+    message_holder.markdown("#")
+    message_holder.markdown("#")
+    spinner_text(0)
+
+
 
 ########################################################################################
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
@@ -62,6 +85,8 @@ def get_chat_history(df):
     return chat_history
 
 context = get_chat_history(filtered_df)
+
+spinner_text(1)
 
 def get_scores(context):
     system_prompt = f"""Based on the conversation between 'User' and 'AI', your task is to assign scores \
@@ -138,6 +163,8 @@ def percentile_above(mean, std_dev, value):
 percentile = percentile_above(3.773399014778325, 0.9273521676028207, average_score)
 percentile = round(percentile, 2)
 
+spinner_text(2)
+
 def summary(context):
     system_prompt = f"""Based on the conversation between 'User' and 'AI', your task is to find out the user's one representative stressor, symptom, and coping strategy.
     After you find out the representative stressor, symptom, and coping strategy, you should provide a brief summary of each item based on the conversation.
@@ -169,6 +196,7 @@ def summary(context):
     return completion.choices[0].message.content
 
 summary = summary(context)
+spinner_text(3)
 
 def overall_summary(context):
     system_prompt = f"""Based on the conversation between 'User' and 'AI', your task is to summarize the user's stressor in one short sentence.
@@ -194,6 +222,8 @@ def overall_summary(context):
     return completion.choices[0].message.content
 
 overall_summary = overall_summary(context)
+
+spinner_text(4)
 
 # current_date.year, current_date.month, current_date.day: 현재 날짜의 년, 월, 일
 # average_score: 평균 점수
@@ -228,35 +258,5 @@ st_supabase_client.table("history").insert(
                 }
             ]
         ).execute()
-
-#############################################################################################
-st.title("결과 분석 중입니다...🔍\n")
-
-# 메시지를 담고 있는 리스트
-waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니다 ❤️", "고민모니라는 이름은 ChatGPT가 지어줬습니다 😎", 
-                "상상관 4층에는 곱등이가 산다는 소문이 있습니다 😮", "인공지능응용학과 만세! 최고! 😍",
-                "유박사 팀은 이번 여름에 학사 졸업합니다 🎉"]
-
-analysis_ing = True
-
-# 스피너와 함께 메시지 표시
-with st.spinner('딱 10초만 기다려주세요!'):
-    # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
-    message_holder = st.empty()
-    
-    while analysis_ing:
-        # 각 메시지를 5초 간격으로 표시
-        for message in waiting_list:
-            message_holder.markdown("#")
-            message_holder.markdown("#")
-            message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {message} </div>"
-            message_holder.markdown(
-                message_ui,
-                unsafe_allow_html=True,
-            )        
-            time.sleep(5)  # 5초 동안 대기
-            # 큰 타이틀 추가
-        
-analysis_ing = False
 
 st.switch_page("pages/Result.py")
