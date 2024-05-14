@@ -35,7 +35,7 @@ page = st_navbar(["고민모니?", "대시보드", "상세보기", "내프로필
 
 sys_font = fm.findSystemFonts()
 nanum_fonts = [f for f in sys_font if 'Nanum' in f]
-path ='C:/Users/Dana You/Downloads/nanum-all/나눔 글꼴/나눔스퀘어/NanumFontSetup_OTF_SQUARE/NanumSquareR.otf'
+# path ='C:/Users/Dana You/Downloads/nanum-all/나눔 글꼴/나눔스퀘어/NanumFontSetup_OTF_SQUARE/NanumSquareR.otf'
 
 ### DATA SETUP
 
@@ -137,30 +137,30 @@ with st.container():
     
     stressor_list = '손톱뜯기, 손톱뜯기, 피로'
 
-    def wordcolud_show(text):
-        wordcloud = WordCloud(width=200, height=200,
-                            background_color='white',
-                            max_words=20,
-                            contour_width=3,
-                            contour_color='Set2',
-                            font_path=path).generate(text)     
-        # Display the generated image:
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        plt.show()
-        st.pyplot(plt)
+    # def wordcolud_show(text):
+    #     wordcloud = WordCloud(width=200, height=200,
+    #                         background_color='white',
+    #                         max_words=20,
+    #                         contour_width=3,
+    #                         contour_color='Set2',
+    #                         font_path=path).generate(text)     
+    #     # Display the generated image:
+    #     plt.imshow(wordcloud, interpolation='bilinear')
+    #     plt.axis("off")
+    #     plt.show()
+    #     st.pyplot(plt)
 
     # 스트레스 원인
     cols = st.columns(3)
     with cols[0]:
         st.write("학업 스트레스 원인 키워드")
-        wordcolud_show(stressor_list)
+        # wordcolud_show(stressor_list)
     with cols[1]:
         st.write("학업 스트레스 증상 키워드")
-        wordcolud_show(stressor_list)
+        # wordcolud_show(stressor_list)
     with cols[2]:
         st.write("학업 스트레스 대처전략 키워드")
-        wordcolud_show(stressor_list)
+        # wordcolud_show(stressor_list)
 
 
 if page == "상세보기":

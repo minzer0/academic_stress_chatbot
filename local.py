@@ -101,3 +101,4 @@ with cols[1]:
     plt.axis("off")
     plt.show()
     st.pyplot(plt)
+

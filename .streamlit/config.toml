@@ -6,5 +6,3 @@ textColor="#254b96"
 [client]
 showSidebarNavigation = false
 
-[browser]
-hideTopBar = true
