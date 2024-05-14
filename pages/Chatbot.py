@@ -3,6 +3,7 @@ import streamlit as st
 
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
+from streamlit_navigation_bar import st_navbar
 
 ########################################################################################
 # SETUP
@@ -10,6 +11,27 @@ st.set_page_config(
     page_title = "고민모니",
     page_icon = "./images/logo.png"
 )
+
+options = {
+    "show_menu": False,
+    "show_sidebar": True,
+}
+page = st_navbar(["소개", "대시보드", "상세보기", "모니와대화", "로그아웃"], selected="모니와대화", options=options,)
+
+if page == "소개":
+    st.switch_page("pages/About.py")
+
+if page == "대시보드":
+    st.switch_page("pages/Home.py")
+
+if page == "상세보기":
+    st.switch_page("pages/History.py")
+
+# if page == "모니와대화":
+#     st.switch_page("pages/Chatbot.py")
+
+if page == "로그아웃":
+    st.switch_page("app.py")
 
 # .streamlit/style.css 파일 열기
 with open("./.streamlit/style.css") as css:

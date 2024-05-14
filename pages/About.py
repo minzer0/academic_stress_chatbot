@@ -1,22 +1,31 @@
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 
-# .streamlit/style.css 파일 열기
-with open("./.streamlit/style.css") as css:
-    # CSS 파일을 읽어와서 스타일 적용
-    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+options = {
+    "show_menu": False,
+    "show_sidebar": True,
+}
+page = st_navbar(["소개", "대시보드", "상세보기", "모니와대화", "로그아웃"], selected="소개", options=options,)
 
-
-page = st_navbar(["고민모니?", "대시보드", "상세보기",  "로그아웃"], selected="고민모니?")
-
-if page == "상세보기":
-    st.switch_page("pages/History.py")
+# if page == "소개":
+#     st.switch_page("pages/About.py")
 
 if page == "대시보드":
     st.switch_page("pages/Home.py")
 
+if page == "상세보기":
+    st.switch_page("pages/History.py")
+
+if page == "모니와대화":
+    st.switch_page("pages/Chatbot.py")
+
 if page == "로그아웃":
     st.switch_page("app.py")
+    
+# .streamlit/style.css 파일 열기
+with open("./.streamlit/style.css") as css:
+    # CSS 파일을 읽어와서 스타일 적용
+    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 ####################################################################################
 st.title("고민모니에 대해 알려드릴게요!")

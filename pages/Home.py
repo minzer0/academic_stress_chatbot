@@ -24,13 +24,23 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-page = st_navbar(["소개", "대시보드", "상세보기", "모니와대화", "로그아웃"], selected="대시보드")
+options = {
+    "show_menu": False,
+    "show_sidebar": True,
+}
+page = st_navbar(["소개", "대시보드", "상세보기", "모니와대화", "로그아웃"], selected="대시보드", options=options,)
+
+if page == "소개":
+    st.switch_page("pages/About.py")
+
+# if page == "대시보드":
+#     st.switch_page("pages/Home.py")
 
 if page == "상세보기":
     st.switch_page("pages/History.py")
 
-if page == "고민모니":
-    st.switch_page("pages/About.py")
+if page == "모니와대화":
+    st.switch_page("pages/Chatbot.py")
 
 if page == "로그아웃":
     st.switch_page("app.py")
@@ -154,18 +164,18 @@ font_path = "./Fonts/GmarketSansTTFMedium.ttf"
 with st.container():
     st.subheader("가장 최근에 측정한 학업 스트레스의...")
 
-    def wordcolud_show(text):
-        wordcloud = WordCloud(width=200, height=200,
-                            background_color="#fffffb",
-                            max_words=20,
-                            contour_width=3,
-                            contour_color='Set2',
-                            font_path=font_path).generate(text)     
-        # Display the generated image:
-        plt.figure(figsize=(10, 5))
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-        st.pyplot(plt)
+    # def wordcolud_show(text):
+    #     wordcloud = WordCloud(width=200, height=200,
+    #                         background_color="#fffffb",
+    #                         max_words=20,
+    #                         contour_width=3,
+    #                         contour_color='Set2',
+    #                         font_path=font_path).generate(text)     
+    #     # Display the generated image:
+    #     plt.figure(figsize=(10, 5))
+    #     plt.imshow(wordcloud, interpolation='bilinear')
+    #     plt.axis("off")
+    #     st.pyplot(plt)
 
     # 스트레스 원인
     cols = st.columns(3)

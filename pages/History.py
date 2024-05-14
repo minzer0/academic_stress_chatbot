@@ -16,6 +16,27 @@ import plotly.graph_objects as go
 ########################################################################################
 # SETUP
 
+options = {
+    "show_menu": False,
+    "show_sidebar": True,
+}
+page = st_navbar(["소개", "대시보드", "상세보기", "모니와대화", "로그아웃"], selected="상세보기", options=options,)
+
+if page == "소개":
+    st.switch_page("pages/About.py")
+
+if page == "대시보드":
+    st.switch_page("pages/Home.py")
+
+# if page == "상세보기":
+#     st.switch_page("pages/History.py")
+
+if page == "모니와대화":
+    st.switch_page("pages/Chatbot.py")
+
+if page == "로그아웃":
+    st.switch_page("app.py")
+
 # .streamlit/style.css 파일 열기
 with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
@@ -48,19 +69,6 @@ history_df_de = history_df.sort_values(by='date', ascending=False)
 history_df_de.reset_index(drop=True, inplace=True)
 score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
-########################################################################################
-
-page = st_navbar(["고민모니?", "대시보드", "상세보기",  "로그아웃"], selected="상세보기")
-
-
-if page == "고민모니?":
-    st.switch_page("pages/About.py")
-
-if page == "대시보드":
-    st.switch_page("pages/Home.py")
-
-if page == "로그아웃":
-    st.switch_page("app.py")
 
 ####################################################################################
 st.title("이전 결과 확인")
