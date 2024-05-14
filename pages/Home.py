@@ -101,7 +101,7 @@ range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조�
 
 
 ########################################################################################
-def dashboard():
+if page == "대시보드":
     st.header("학업 스트레스 측정 요약")
     with st.container(border=True):
         st.subheader("학업 스트레스 수치")
@@ -161,14 +161,11 @@ def dashboard():
             st.write("학업 스트레스 대처전략 키워드")
             # wordcolud_show(stressor_list)
 
-if page == "대시보드":
-    dashboard()
-
 if page == "상세보기":
-    pg.history()
+    st.switch_page("pages/Home.py")
 
 if page == "고민모니?":
-    pg.about()
+    st.switch_page("pages/About.py")
 
 if page == "내프로필":
     st.write("프로필")
