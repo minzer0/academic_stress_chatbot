@@ -52,11 +52,6 @@ score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
 page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="상세보기")
 
-st.set_page_config(
-    page_title = "고민모니",
-    page_icon = "./images/logo.png",
-    initial_sidebar_state="collapsed",
-)
 
 if page == "고민모니?":
     st.switch_page("pages/About.py")
