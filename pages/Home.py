@@ -24,10 +24,10 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# .streamlit/style.css 파일 열기
-with open("./.streamlit/style.css") as css:
-    # CSS 파일을 읽어와서 스타일 적용
-    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+# # .streamlit/style.css 파일 열기
+# with open("./.streamlit/style.css") as css:
+#     # CSS 파일을 읽어와서 스타일 적용
+#     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 
 sys_font = fm.findSystemFonts()

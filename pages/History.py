@@ -21,10 +21,10 @@ st.set_page_config(
     page_icon = "./images/logo.png"
 )
 
-# .streamlit/style.css 파일 열기
-with open("./.streamlit/style.css") as css:
-    # CSS 파일을 읽어와서 스타일 적용
-    st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
+# # .streamlit/style.css 파일 열기
+# with open("./.streamlit/style.css") as css:
+#     # CSS 파일을 읽어와서 스타일 적용
+#     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 if "user_metadata" not in st.session_state:
     st.error("로그인이 필요합니다.")
