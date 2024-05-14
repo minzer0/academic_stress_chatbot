@@ -12,6 +12,8 @@ from function.result_dictionary import symptoms_icons
 from function.result_dictionary import coping_icons
 from function.menu import menu
 
+from Home import history_df_de, range_labels
+
 #######################################################################################
 # SETUP
 
@@ -74,12 +76,7 @@ if len(filtered_df) == 0:
 
 else:
 # 메인 헤더
-    # 평탄화된 리스트 생성
-    summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
-    st.header("학업 스트레스 검사 결과")
-    # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-    st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
-    
+
     score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
     def score_classification(score):
@@ -87,7 +84,13 @@ else:
             if score <= upper_bound:
                 return idx
                 
-    with st.container(border=True):        
+    with st.container(border=True):
+        # 평탄화된 리스트 생성
+        summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
+        st.header("학업 스트레스 검사 결과")
+        # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
+        st.write(f"{user_name}님의 점수는 {average_score: .2f}로, 전체 사용자 중 상위 **{percentile}**%에요.")
+
         # 데이터 생성
         np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
         dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
@@ -114,7 +117,7 @@ else:
         fig.add_trace(go.Scatter(x=x_fill, y=y_fill, fill='tozeroy', mode='none', name='당신의 스트레스 수치',
                                 fillcolor=part_color, opacity=0.3))
 
-        fig.update_layout(title='학업 스트레스 점수의 PDF',
+        fig.update_layout(
                         xaxis_title='학업 스트레스 점수',
                         yaxis_title='확률밀도함수',
                         legend_title='범례')
@@ -161,6 +164,35 @@ else:
     else:
         st.line_chart(history_df_as, x="날짜", y="스트레스 점수", color='#ffc8ce')
 
+with st.container(border=True):
+    st.subheader("학업 스트레스 수치")
+    
+    # 데이터프레임을 Altair에 맞게 변환
+    base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+        x='date:T',
+        y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
+        color=alt.value("#000000")
+    )
+
+    # 구간별 척도 가로선 추가
+    rule_data = pd.DataFrame({
+        '학업 스트레스 단계': score_ranges,
+        '구간': range_labels, 
+        '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+
+    })
+
+    rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+        y='학업 스트레스 단계:Q',
+        color=alt.Color('색상:N', scale=None)
+    )
+
+    final_chart = base_chart + rule_chart 
+
+    st.altair_chart(final_chart, use_container_width=True)
+    st.image('./images/스트레스 수치/스트레스5단계.png')
+
+
 col1, col2, col3 = st.columns(3)
 with col2:
     if st.button(":bar_chart:    이전 기록 확인하기",
@@ -168,6 +200,6 @@ with col2:
         st.switch_page("pages/History.py")
     if st.button("🏠   홈 화면으로 돌아가기",
             use_container_width=True, ):
-        st.switch_page("pages/Chatbot.py")
+        st.switch_page("pages/Home.py")
 
 menu()

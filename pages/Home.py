@@ -124,9 +124,7 @@ with st.container(border=True):
     st.altair_chart(final_chart, use_container_width=True)
     st.image('./images/스트레스 수치/스트레스5단계.png')
 
-import os
 
-font_path = "./Fonts/GmarketSansTTFMedium.ttf"
 with st.container():
     st.subheader(f"[{history_df_de.loc[0, 'date']}] 가장 최근에 측정한 학업 스트레스의...")
 

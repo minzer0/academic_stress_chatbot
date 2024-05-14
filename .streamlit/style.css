@@ -2,19 +2,9 @@
 
 
 
-/* 전체 텍스트 요소의 글씨체 및 크기 설정 */
-body {
-    font-family: "Gowun Batang", sans-serif !important;
-    font-size: 25px; /* 기본 글씨 크기 */
-}
 
 /* 특정 Streamlit 클래스에 대한 글씨 크기 조정 */
 [class^=st-emotion] {
     font-family: "Gowun Batang", sans-serif !important;
     font-size: 25px; /* 글씨 크기를 20px로 설정 */
-}
-
-/* 제목 (h1) 요소의 글씨 크기 설정 */
-h1 {
-    font-size: 32px; /* 큰 제목 글씨 크기 */
 }
