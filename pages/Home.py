@@ -21,7 +21,9 @@ from function.result_dictionary import coping_icons
 st.set_page_config(
     page_title = "고민모니",
     page_icon = "./images/logo.png",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    show_sidebar = True,
+    show_menu = False
 )
 
 # # .streamlit/style.css 파일 열기
@@ -30,8 +32,6 @@ st.set_page_config(
 #     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
 
-sys_font = fm.findSystemFonts()
-nanum_fonts = [f for f in sys_font if 'Nanum' in f]
 # path ='C:/Users/Dana You/Downloads/nanum-all/나눔 글꼴/나눔스퀘어/NanumFontSetup_OTF_SQUARE/NanumSquareR.otf'
 
 ### DATA SETUP
@@ -140,35 +140,38 @@ with st.container(border=True):
     st.altair_chart(final_chart, use_container_width=True)
     st.image('./images/스트레스 수치/스트레스5단계.png')
 
+import os
+
+font_path = "./Fonts/GmarketSansTTFMedium.ttf"
 with st.container():
-    st.subheader("가장 최근에 측정한 학업 스트레스의...")
-    
+    st.subheader("모니와 대화할 때 언급한 학업 스트레스의...")
+
     stressor_list = '손톱뜯기, 손톱뜯기, 피로'
 
-    # def wordcolud_show(text):
-    #     wordcloud = WordCloud(width=200, height=200,
-    #                         background_color='white',
-    #                         max_words=20,
-    #                         contour_width=3,
-    #                         contour_color='Set2',
-    #                         font_path=path).generate(text)     
-    #     # Display the generated image:
-    #     plt.imshow(wordcloud, interpolation='bilinear')
-    #     plt.axis("off")
-    #     plt.show()
-    #     st.pyplot(plt)
+    def wordcolud_show(text):
+        wordcloud = WordCloud(width=200, height=200,
+                            background_color='white',
+                            max_words=20,
+                            contour_width=3,
+                            contour_color='Set2',
+                            font_path=font_path).generate(text)     
+        # Display the generated image:
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        st.pyplot(plt)
 
     # 스트레스 원인
     cols = st.columns(3)
     with cols[0]:
-        st.write("학업 스트레스 원인 키워드")
-        # wordcolud_show(stressor_list)
+        st.write("원인은")
+        wordcolud_show(stressor_list)
     with cols[1]:
-        st.write("학업 스트레스 증상 키워드")
-        # wordcolud_show(stressor_list)
+        st.write("증상은")
+        wordcolud_show(stressor_list)
     with cols[2]:
-        st.write("학업 스트레스 대처전략 키워드")
-        # wordcolud_show(stressor_list)
+        st.write("대처전략은")
+        wordcolud_show(stressor_list)
 
 
 st.write("#")

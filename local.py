@@ -67,16 +67,18 @@ st.plotly_chart(fig, use_container_width=True)
 
 sys_font = fm.findSystemFonts()
 nanum_fonts = [f for f in sys_font if 'Nanum' in f]
-path ='C:/Users/Dana You/Downloads/nanum-all/나눔 글꼴/나눔스퀘어/NanumFontSetup_OTF_SQUARE/NanumSquareR.otf'
 
 word_list = '손톱뜯기, 손톱뜯기, 피로'
+
+from matplotlib import rc
+rc('font', family='NanumGothic')
 
 wordcloud = WordCloud(width=800, height=800,
                       background_color='white',
                       max_words=200,
                       contour_width=3,
                       contour_color='steelblue',
-                      font_path=path).generate(' '.join(word_list))
+                      font_path='malgun.ttf').generate(' '.join(word_list))
 
 plt.figure(figsize=(10, 10))
 plt.imshow(wordcloud, interpolation='bilinear')
@@ -101,4 +103,3 @@ with cols[1]:
     plt.axis("off")
     plt.show()
     st.pyplot(plt)
-
