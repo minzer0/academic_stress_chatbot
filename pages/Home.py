@@ -24,6 +24,19 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="대시보드", 
+                 show_menu=False, show_sidebar=True)
+
+if page == "상세보기":
+    st.switch_page("pages/History.py")
+
+if page == "고민모니?":
+    st.switch_page("pages/About.py")
+
+if page == "내프로필":
+    st.switch_page("pages/Profile.py")
+
+#######################################################################################
 # # .streamlit/style.css 파일 열기
 # with open("./.streamlit/style.css") as css:
 #     # CSS 파일을 읽어와서 스타일 적용
@@ -97,18 +110,7 @@ range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조�
 
 
 ########################################################################################
-page = st_navbar(["고민모니?", "대시보드", "상세보기",  "내프로필"], selected="대시보드")
 
-if page == "상세보기":
-    st.switch_page("pages/History.py")
-
-if page == "고민모니?":
-    st.switch_page("pages/About.py")
-
-if page == "내프로필":
-    st.switch_page("pages/Profile.py")
-
-#######################################################################################
 st.header("학업 스트레스 측정 요약")
 with st.container(border=True):
     st.subheader("학업 스트레스 수치")

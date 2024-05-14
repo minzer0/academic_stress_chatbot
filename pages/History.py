@@ -90,7 +90,7 @@ else:
                     return idx
                 
         # 예시 데이터 생성
-        np.random.seed(0)
+        # np.random.seed(0)
         dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
         mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
 
