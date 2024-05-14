@@ -56,8 +56,6 @@ st.set_page_config(
     page_title = "고민모니",
     page_icon = "./images/logo.png",
     initial_sidebar_state="collapsed",
-    show_sidebar = True,
-    show_menu = False
 )
 
 if page == "고민모니?":
