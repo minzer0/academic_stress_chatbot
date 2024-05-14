@@ -5,7 +5,9 @@ import pandas as pd
 from function.menu import menu
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
-# import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import norm
 # from wordcloud import WordCloud
 
 # from function.dummy_data import df_sorted
@@ -87,19 +89,6 @@ data_empty = False
 if len(history_df) == 0:
     data_empty = True
 
-
-# summary_list = [
-#     "그는 열심히 일한 하루",
-#     "즐겁게 놀았던 하루",
-#     "공부하며 보낸 하루",
-#     "운동으로 가득 찬 하루",
-#     "친구들과 함께 한 하루",
-#     "가족과 시간을 보낸 하루",
-#     "자연 속에서 편안한 하루",
-#     "새로운 취미를 발견한 하루",
-#     "창의적인 프로젝트를 완성한 하루",
-#     "음악을 즐기며 보낸 하루"
-# ] -> overall_summary로 수정 전체 대화 한 줄 요약
 
 
 # 정석대로 하면.. score_ranges = [1.94, 3.09, 3.72, 4.39, 4.92, 5.0]
@@ -190,51 +179,75 @@ with tabs[1]:
         part_score = history_df_de.loc[part_idx, 'average_score']
         part_percentile = history_df_de.loc[part_idx, 'percentile']
 
-        st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 많은 순으로**{part_percentile:.1f}등**이에요.")
+        st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
                 
         def score_classification(score):
             for idx, upper_bound in enumerate(score_ranges):
                 if score <= upper_bound:
                     return idx
+                
+        # 예시 데이터 생성
+        np.random.seed(0)
+        dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
+        mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
 
-        # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
-        st.write("**:blue[파란색]**: 나와 비슷한 점수(+/-5)를 가진 사람들 ")
+        # PDF 그래프 생성
+        def plot_pdf(data, user_score):
+            sns.set(style="whitegrid")
+            plt.figure(figsize=(8, 4))
+            x = np.linspace(min(data), max(data), 1000)
+            y = norm.pdf(x, mu, std)  # 확률밀도함수
+            plt.plot(x, y, 'k', lw=2)
+            # 사용자 점수 위치 표시
+            plt.axvline(x=user_score, color='r', linestyle='--')
+            plt.xlabel('학업 스트레스 점수')
+            plt.ylabel('Probability Density')
+            plt.title('학업 스트레스 점수의 PDF')
+            plt.legend(['확률밀도함수', '사용자 점수'])
+            st.pyplot(plt)
 
-        # 데이터 생성
-        np.random.seed(0) # 재현성을 위해 랜덤 시드 설정
-        n_samples = 100  # 샘플 수
+        # 스트림릿에서 그래프 출력
+        plot_pdf(dummy_scores, part_score)
 
-        # 정규분포 데이터 생성
-        dist_data = np.random.normal(3.773399014778325, 0.9273521676028207, n_samples)
-        dist_df = pd.DataFrame(dist_data, columns=['score'])
+        # # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
+        # st.write("**:blue[파란색]**: 나와 비슷한 점수(+/-5)를 가진 사람들 ")
 
-        # 히스토그램 생성
-        base_histogram = (
-            alt.Chart(dist_df)
-            .mark_bar()
-            .encode(
-                x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),  # 5점 간격으로 분할
-                y="count()",
-                color=alt.value("lightgray")
-            )
-        )
+        # # 데이터 생성
+        # np.random.seed(0) # 재현성을 위해 랜덤 시드 설정
+        # n_samples = 100  # 샘플 수
 
-        # 특정 영역 강조
-        highlight = (
-            alt.Chart(dist_df[dist_df['score'].between(average_score-0.1, average_score+0.1)])  # 점수 기준 +/-5 범위
-            .mark_bar(color='#FFB6C1')  # 강조 색상 설정
-            .encode(
-                x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
-                y="count()",
-            )
-        )
+        # # 정규분포 데이터 생성
+        # dist_data = np.random.normal(3.773399014778325, 0.9273521676028207, n_samples)
+        # dist_df = pd.DataFrame(dist_data, columns=['score'])
 
-        # 히스토그램과 강조 영역 결합
-        final_chart = base_histogram + highlight
+        # # 히스토그램 생성
+        # base_histogram = (
+        #     alt.Chart(dist_df)
+        #     .mark_bar()
+        #     .encode(
+        #         x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),  # 5점 간격으로 분할
+        #         y="count()",
+        #         color=alt.value("lightgray")
+        #     )
+        # )
 
-        # 차트 렌더링
-        st.altair_chart(final_chart, use_container_width=True)
+        # # 특정 영역 강조
+        # highlight = (
+        #     alt.Chart(dist_df[dist_df['score'].between(average_score-0.1, average_score+0.1)])  # 점수 기준 +/-5 범위
+        #     .mark_bar(color='#FFB6C1')  # 강조 색상 설정
+        #     .encode(
+        #         x=alt.X("score:Q", bin=alt.Bin(extent=[1.0, 5.0], step=0.5)),
+        #         y="count()",
+        #     )
+        # )
+
+        # # 히스토그램과 강조 영역 결합
+        # final_chart = base_histogram + highlight
+
+        # # 차트 렌더링
+        # st.altair_chart(final_chart, use_container_width=True)
         
+
         score_img_list = ["고민이모니", "이정도는", "인생이", "조금지쳐", "폭발직전"]
         
         score_img_path = f"./images/스트레스 수치/스트레스_{score_img_list[score_classification(part_score)]}.png"
@@ -316,6 +329,7 @@ with tabs[2]:
 
 
 with tabs[3]:
+    st.write("고민모니는 학생들의 학업 스트레스를 개선하기 위해 고안되었어요.")
     st.image('./images/HAI_logo.png')
 
 st.write("#")
