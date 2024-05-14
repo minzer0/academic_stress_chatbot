@@ -63,4 +63,4 @@ watchdog==4.0.0
 websockets==12.0
 scipy
 seaborn
-matplotlib.pyplot
+matplotlib
