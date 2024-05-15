@@ -96,6 +96,7 @@ else:
 
     # 비교
     with st.container(border=True):
+        st.subheader("학업 스트레스 점수 확인")
         for part_score, part_percentile in zip(history_df_de.loc[part_idx, 'average_score'], history_df_de.loc[part_idx, 'percentile']):
             st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
         # part_score = history_df_de.loc[part_idx, 'average_score']
@@ -134,7 +135,7 @@ else:
         fig.add_trace(go.Scatter(x=x_fill, y=y_fill, fill='tozeroy', mode='none', name='당신의 스트레스 수치',
                                 fillcolor=part_color, opacity=0.3))
 
-        fig.update_layout(title='학업 스트레스 점수의 PDF',
+        fig.update_layout(
                         xaxis_title='학업 스트레스 점수',
                         yaxis_title='확률밀도함수',
                         legend_title='범례')
