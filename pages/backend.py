@@ -28,7 +28,7 @@ def spinner_text(i):
         unsafe_allow_html=True,
     )
     image_placeholder = st.empty()
-    if i == 0:
+    if i == 4:
         image_placeholder.image("./images/waiting_picture.jpg")
         time.sleep(2)  # 이미지를 2초 동안 보여줌
         image_placeholder.empty()  # 이미지 제거
