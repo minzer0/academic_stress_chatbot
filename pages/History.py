@@ -56,7 +56,7 @@ if len(history_df) == 0:
     st.image('./images/nulldata2.png')
 
 else: 
-    st.subheader("학업 스트레스 점수 추이")
+    st.write("학업 스트레스 점수 추이")
     # 라인 차트 시각화
     with st.container(border=True):   
         # 데이터프레임을 Altair에 맞게 변환
