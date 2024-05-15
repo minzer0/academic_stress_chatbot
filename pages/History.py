@@ -56,74 +56,68 @@ if len(history_df) == 0:
     st.image('./images/nulldata2.png')
 
 else: 
-    # 탭을 사용할 경우 (간단한 탭 구현)
-    tabs = st.tabs(["점수 추이", "대화별 상세 내역"])
+    st.subheader("학업 스트레스 점수 추이")
+    # 라인 차트 시각화
+    with st.container(border=True):   
+        # 데이터프레임을 Altair에 맞게 변환
+        base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+            x=alt.X('date:T', title="날짜"),
+            y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 점수"),
+            color=alt.value("#000000")
+        )
 
-    # 홈 탭
-    with tabs[0]:
-        st.subheader("학업 스트레스 점수 추이")
-        # 라인 차트 시각화
-        with st.container(border=True):   
-            # 데이터프레임을 Altair에 맞게 변환
-            base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
-                x=alt.X('date:T', title="날짜"),
-                y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 점수"),
-                color=alt.value("#000000")
-            )
+        # 구간별 척도 가로선 추가
+        rule_data = pd.DataFrame({
+            '학업 스트레스 단계': score_ranges,
+            '구간': range_labels, 
+            '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
 
-            # 구간별 척도 가로선 추가
-            rule_data = pd.DataFrame({
-                '학업 스트레스 단계': score_ranges,
-                '구간': range_labels, 
-                '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+        })
 
-            })
+        rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+            y='학업 스트레스 단계:Q',
+            color=alt.Color('색상:N', scale=None)
+        )
 
-            rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
-                y='학업 스트레스 단계:Q',
-                color=alt.Color('색상:N', scale=None)
-            )
+        final_chart = base_chart + rule_chart 
 
-            final_chart = base_chart + rule_chart 
-
-            st.altair_chart(final_chart, use_container_width=True)
-            st.image('./images/스트레스 수치/스트레스5단계.png')
+        st.altair_chart(final_chart, use_container_width=True)
+        st.image('./images/스트레스 수치/스트레스5단계.png')
 
     # 리포트 탭
-    with tabs[1]:
-        st.subheader("대화별 상세 내역 보기")
+    st.subheader("대화별 상세 내역 보기")
 
-        for i in range(len(history_df_de)):
-            # f-string 내부의 인용 부호 수정
-            with st.expander(label=f"{history_df_de.loc[i, 'date']} : {history_df_de.loc[i, 'overall_summary']}"):
-                st.metric(label="학업 스트레스 총점", value= f"{history_df_de.loc[i, 'average_score']:.2f}", )
+    for i in range(len(history_df_de)):
+        # f-string 내부의 인용 부호 수정
+        with st.expander(label=f"{history_df_de.loc[i, 'date']} : {history_df_de.loc[i, 'overall_summary']}"):
+            st.metric(label="학업 스트레스 총점", value= f"{history_df_de.loc[i, 'average_score']:.2f}", )
 
-                summary = history_df_de.loc[i, 'summary']
-                summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
+            summary = history_df_de.loc[i, 'summary']
+            summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
 
-                # 스트레스 원인
-                st.markdown("### 스트레스 원인")
-                stressor = summary_list[0].split(':')[0].strip()
-                stressor_explain = summary_list[0].split(':')[1].strip() 
-                stressor_icon = stressor_icons.get(stressor, '👌')
-                st.write(f"{stressor_icon} {stressor}")
-                st.write(f"{stressor_explain}")
+            # 스트레스 원인
+            st.markdown("### 스트레스 원인")
+            stressor = summary_list[0].split(':')[0].strip()
+            stressor_explain = summary_list[0].split(':')[1].strip() 
+            stressor_icon = stressor_icons.get(stressor, '👌')
+            st.write(f"{stressor_icon} {stressor}")
+            st.write(f"{stressor_explain}")
 
-                # 스트레스 증상
-                st.markdown("### 스트레스 증상")
-                symptom = summary_list[1].split(':')[0].strip()
-                symptom_explain = summary_list[1].split(':')[1].strip() 
-                symptom_icon = symptoms_icons.get(symptom, '👌')
-                st.write(f"{symptom_icon} {symptom}")
-                st.write(f"{symptom_explain}")
+            # 스트레스 증상
+            st.markdown("### 스트레스 증상")
+            symptom = summary_list[1].split(':')[0].strip()
+            symptom_explain = summary_list[1].split(':')[1].strip() 
+            symptom_icon = symptoms_icons.get(symptom, '👌')
+            st.write(f"{symptom_icon} {symptom}")
+            st.write(f"{symptom_explain}")
 
-                # 스트레스 대처 전략 정보
-                st.markdown("### 스트레스 대처 전략")
-                coping = summary_list[2].split(':')[0].strip()
-                coping_explain = summary_list[2].split(':')[1].strip() 
-                coping_icon = coping_icons.get(coping, '👌')
-                st.write(f"{coping_icon} {coping}")
-                st.write(f"{coping_explain}")
+            # 스트레스 대처 전략 정보
+            st.markdown("### 스트레스 대처 전략")
+            coping = summary_list[2].split(':')[0].strip()
+            coping_explain = summary_list[2].split(':')[1].strip() 
+            coping_icon = coping_icons.get(coping, '👌')
+            st.write(f"{coping_icon} {coping}")
+            st.write(f"{coping_explain}")
 
     # selected_date = st.selectbox(
     #     "측정 날짜", history_df_de['date']
