@@ -84,15 +84,15 @@ else:
     #     st.altair_chart(final_chart, use_container_width=True)
     #     st.image('./images/스트레스 수치/스트레스5단계.png')
 
-    # # # 리포트 탭
-    # # st.subheader("날짜별 상세 결과 확인하기")
+    # # 리포트 탭
+    # st.subheader("날짜별 상세 결과 확인하기")
 
-    # selected_date = st.selectbox(
-    #     "날짜별 상세 결과 확인하기", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
-    # )
+    selected_date = st.selectbox(
+        "날짜별 상세 결과 확인하기", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
+    )
 
-    # part_idx = history_df_de.index[(history_df_de['date'] + " : " + history_df_de['overall_summary'])== selected_date]
-    # # st.subheader(f"{history_df_de.loc[part_idx, 'overall_summary']}" )
+    part_idx = history_df_de.index[(history_df_de['date'] + " : " + history_df_de['overall_summary'])== selected_date]
+    # st.subheader(f"{history_df_de.loc[part_idx, 'overall_summary']}" )
 
     # 비교
     with st.container(border=True):
@@ -200,15 +200,5 @@ else:
 
         st.altair_chart(final_chart, use_container_width=True)
         st.image('./images/스트레스 수치/스트레스5단계.png')
-
-    # # 리포트 탭
-    # st.subheader("날짜별 상세 결과 확인하기")
-
-    selected_date = st.selectbox(
-        "날짜별 상세 결과 확인하기", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
-    )
-
-    part_idx = history_df_de.index[(history_df_de['date'] + " : " + history_df_de['overall_summary'])== selected_date]
-    # st.subheader(f"{history_df_de.loc[part_idx, 'overall_summary']}" )
 
 menu()
