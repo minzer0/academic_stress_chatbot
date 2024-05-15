@@ -90,7 +90,7 @@ else:
 
     ########################################################################################
 
-    st.markdown(f"# {user_name}님의 학업 스트레스 측정 결과 요약")
+    st.markdown(f"## {user_name}님의 학업 스트레스 측정 결과 요약")
     with st.container(border=True):
         st.subheader("학업 스트레스 점수 추이")
         
