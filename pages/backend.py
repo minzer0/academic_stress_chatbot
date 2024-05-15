@@ -23,13 +23,15 @@ waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니�
                 "유박사 팀은 이번 여름에 학사 졸업합니다 🎉"]
 
 def spinner_text(i):
+    message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
+    message_holder.markdown(
+        message_ui,
+        unsafe_allow_html=True,
+    )
+    if i == 0:
+        st.image("./images/waiting_picture.jpg")
+    time.sleep(2)
 
-        message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
-        message_holder.markdown(
-            message_ui,
-            unsafe_allow_html=True,
-        )
-        time.sleep(2)
 
 # 스피너와 함께 메시지 표시
 with st.spinner('딱 10초만 기다려주세요!'):
