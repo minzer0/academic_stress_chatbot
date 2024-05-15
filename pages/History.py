@@ -63,12 +63,10 @@ else:
     with tabs[0]:
         st.subheader("학업 스트레스 점수 추이")
         # 라인 차트 시각화
-        with st.container(border=True):
-            st.subheader("학업 스트레스 수치")
-            
+        with st.container(border=True):   
             # 데이터프레임을 Altair에 맞게 변환
             base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
-                x='date:T',
+                x='date:0',
                 y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
                 color=alt.value("#000000")
             )
