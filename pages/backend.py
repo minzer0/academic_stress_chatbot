@@ -241,7 +241,10 @@ if len(context) < 10:
         st.stop()
 
 year = str(current_date.year)
-month = str(current_date.month) 
+if len(str(current_date.month)) == 1:
+    month = "0" + str(current_date.month)
+else:
+    month = str(current_date.month) 
 if len(str(current_date.day)) == 1:
     day = "0" + str(current_date.day)
 else:
