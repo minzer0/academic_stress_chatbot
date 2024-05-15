@@ -128,10 +128,12 @@ else:
 
     # 비교
     with st.container(border=True):
-        part_score = history_df_de.loc[part_idx, 'average_score']
-        part_percentile = history_df_de.loc[part_idx, 'percentile']
+        for part_score, part_percentile in zip(history_df_de.loc[part_idx, 'average_score'], history_df_de.loc[part_idx, 'percentile']):
+            st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
+        # part_score = history_df_de.loc[part_idx, 'average_score']
+        # part_percentile = history_df_de.loc[part_idx, 'percentile']
 
-        st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
+        # st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
                 
         def score_classification(score):
             for idx, upper_bound in enumerate(score_ranges):
