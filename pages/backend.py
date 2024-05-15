@@ -33,11 +33,9 @@ def spinner_text(i):
 
 st.title("결과 분석 중입니다...🔍\n")
 with st.spinner('딱 10초만 기다려주세요!'):
-    message_holder = st.empty()
-    message_holder.markdown("#")
-    message_holder.markdown("#")
     st.subheader("기다리시는 동안 흥미로운 사실들을 알려드립니다 🤓")
     spinner_text(0)
+    time.wait(10)
 
 # # 스피너와 함께 메시지 표시
 # with st.spinner('딱 10초만 기다려주세요!'):
