@@ -177,13 +177,13 @@ else:
 
 
 
-col1, col2, col3 = st.columns(3)
-with col2:
-    if st.button(":bar_chart:    이전 기록 확인하기",
-            use_container_width=True):
-        st.switch_page("pages/History.py")
-    if st.button("🏠   홈 화면으로 돌아가기",
-            use_container_width=True, ):
-        st.switch_page("pages/Home.py")
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        if st.button(":bar_chart:    이전 기록 확인하기",
+                use_container_width=True):
+            st.switch_page("pages/History.py")
+        if st.button("🏠   홈 화면으로 돌아가기",
+                use_container_width=True, ):
+            st.switch_page("pages/Home.py")
 
 menu()
