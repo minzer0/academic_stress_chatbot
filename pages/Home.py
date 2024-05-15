@@ -43,15 +43,30 @@ data = st_supabase_client.table("history").select("*").execute()
 df = pd.DataFrame(data.data)
 current_date = datetime.now()
 
+if len(str(current_date.year)) == 1:
+    c_year = '0' + str(current_date.year)
+else:
+    c_year = str(current_date.year)
+
+if len(str(current_date.month)) == 1:
+    c_month = '0' + str(current_date.month)
+else:
+    c_month = str(current_date.month)
+
+if len(str(current_date.day)) == 1:
+    c_day = '0' + str(current_date.day)
+else:
+    c_day = str(current_date.day)
+
 # 오늘 날짜의 새로운 df
 filtered_df = df[(df['user_name'] == user_name) & 
                  (df['user_id'] == user_id) &
-                 (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+                 (df['date'] == c_year + '-' + c_month + '-' +c_day)]
 filtered_df.reset_index(drop=True, inplace=True)
 # 과거 df
 history_df = df[(df['user_name'] == user_name) & 
                 (df['user_id'] == user_id) &
-                (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+                (df['date'] != c_year + '-' + c_month + '-' +c_day)]
 # 날짜별로 sort된 과거 df
 history_df_de = history_df.sort_values(by='date', ascending=False)
 history_df_de.reset_index(drop=True, inplace=True)

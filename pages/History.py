@@ -34,11 +34,24 @@ user_name = st.session_state["user_metadata"]["user_name"]
 
 data = st_supabase_client.table("history").select("*").execute()
 df = pd.DataFrame(data.data)
+
 current_date = datetime.now()
+if len(str(current_date.year)) == 1:
+    c_year = '0' + str(current_date.year)
+else:
+    c_year = str(current_date.year)
+if len(str(current_date.month)) == 1:
+    c_month = '0' + str(current_date.month)
+else:
+    c_month = str(current_date.month)
+if len(str(current_date.day)) == 1:
+    c_day = '0' + str(current_date.day)
+else:
+    c_day = str(current_date.day)
 
 history_df = df[(df['user_name'] == user_name) & 
                 (df['user_id'] == user_id) &
-                (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+                (df['date'] != c_year + '-' + c_month + '-' +c_day)]
 
 history_df_as = history_df.sort_values(by='date', ascending=True)
 history_df_as.rename(columns={"date": "날짜", "average_score": "스트레스 점수"}, inplace=True)
