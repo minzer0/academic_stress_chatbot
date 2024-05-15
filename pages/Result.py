@@ -43,34 +43,35 @@ filtered_df = df[(df['user_name'] == user_name) &
                  (df['date'] == str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
 filtered_df.reset_index(drop=True, inplace=True)
 
-average_score = filtered_df.loc[0, 'average_score']
-percentile = filtered_df.loc[0, 'percentile']
-summary = filtered_df.loc[0, 'summary']
-overall_summary = filtered_df.loc[0, 'overall_summary']
-
-history_df = df[(df['user_name'] == user_name) & 
-                (df['user_id'] == user_id) &
-                (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
-
-history_df_as = history_df.sort_values(by='date', ascending=True)
-history_df_as.rename(columns={"date": "날짜", "average_score": "스트레스 점수"}, inplace=True)
-history_df_as.reset_index(drop=True, inplace=True)
-
-today = datetime.now().strftime("%Y-%m-%d")
-new_data = pd.DataFrame({'날짜': [today], '스트레스 점수': [average_score]})
-history_df_as = pd.concat([history_df_as, new_data], ignore_index=True)
-history_df_as.reset_index(drop=True, inplace=True)
-
-range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조금지쳐", "폭발직전"]
-########################################################################################
 if len(filtered_df) == 0:
     st.image('./images/nulldata3.png')
     if st.button("모니와 대화하러 가기"):
         st.switch_page("pages/Chatbot.py")
     st.stop()
 
-else:
-# 메인 헤더
+else: 
+
+    average_score = filtered_df.loc[0, 'average_score']
+    percentile = filtered_df.loc[0, 'percentile']
+    summary = filtered_df.loc[0, 'summary']
+    overall_summary = filtered_df.loc[0, 'overall_summary']
+
+    history_df = df[(df['user_name'] == user_name) & 
+                    (df['user_id'] == user_id) &
+                    (df['date'] != str(current_date.year) + '-' + str(current_date.month) + '-' + str(current_date.day))]
+
+    history_df_as = history_df.sort_values(by='date', ascending=True)
+    history_df_as.rename(columns={"date": "날짜", "average_score": "스트레스 점수"}, inplace=True)
+    history_df_as.reset_index(drop=True, inplace=True)
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    new_data = pd.DataFrame({'날짜': [today], '스트레스 점수': [average_score]})
+    history_df_as = pd.concat([history_df_as, new_data], ignore_index=True)
+    history_df_as.reset_index(drop=True, inplace=True)
+
+    range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조금지쳐", "폭발직전"]
+########################################################################################
+
 
     score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
 
