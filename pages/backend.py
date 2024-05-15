@@ -27,9 +27,11 @@ def spinner_text(i):
         message_ui,
         unsafe_allow_html=True,
     )
+    image_placeholder = st.empty()
     if i == 0:
-        st.image("./images/waiting_picture.jpg")
-    time.sleep(2)
+        image_placeholder.image("./images/waiting_picture.jpg")
+        time.sleep(2)  # 이미지를 2초 동안 보여줌
+        image_placeholder.empty()  # 이미지 제거
 
 st.title("결과 분석 중입니다...🔍\n")
 st.subheader("기다리시는 동안 흥미로운 사실들을 알려드립니다 🤓")
