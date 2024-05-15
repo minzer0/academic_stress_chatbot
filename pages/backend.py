@@ -32,11 +32,9 @@ def spinner_text(i):
     time.sleep(2)
 
 st.title("결과 분석 중입니다...🔍\n")
-with st.spinner('딱 10초만 기다려주세요!'):
-    time.wait(10)
-    st.subheader("기다리시는 동안 흥미로운 사실들을 알려드립니다 🤓")
-    message_holder = st.empty()
-    spinner_text(0)
+st.subheader("기다리시는 동안 흥미로운 사실들을 알려드립니다 🤓")
+message_holder = st.empty()
+spinner_text(0)
 
 # # 스피너와 함께 메시지 표시
 # with st.spinner('딱 10초만 기다려주세요!'):
@@ -44,8 +42,6 @@ with st.spinner('딱 10초만 기다려주세요!'):
 #     message_holder = st.empty()
 #     message_holder.markdown("#")
 #     message_holder.markdown("#")
-
-
 
 ########################################################################################
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
