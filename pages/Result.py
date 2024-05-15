@@ -159,23 +159,19 @@ else:
     symptom = summary_list[1].split(':')[0].strip()
     symptom_explain = summary_list[1].split(':')[1].strip() 
     symptom_icon = symptoms_icons.get(symptom, '👌')
-    st.markdown("### 스트레스 증상")
-    st.write(f"{symptom_icon} {symptom}")
+    st.markdown(f"### 스트레스 증상: {symptom_icon} {symptom}")
+    # st.write(f"{symptom_icon} {symptom}")
     st.write(f"{symptom_explain}")
 
     # 스트레스 대처 전략 정보
     coping = summary_list[2].split(':')[0].strip()
     coping_explain = summary_list[2].split(':')[1].strip() 
     coping_icon = coping_icons.get(coping, '👌')
-    st.markdown("### 스트레스 대처 전략")
-    st.write(f"{coping_icon} {coping}")
+    st.markdown(f"### 스트레스 대처 전략: {coping_icon} {coping}")
+    # st.write(f"{coping_icon} {coping}")
     st.write(f"{coping_explain}")
 
-
     st.write("#")
-
-
-
 
     col1, col2, col3 = st.columns(3)
     with col2:
