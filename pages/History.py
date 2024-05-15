@@ -87,38 +87,6 @@ else:
     # 리포트 탭
     st.subheader("날짜별 상세 결과 확인하기")
 
-    for i in range(len(history_df_de)):
-        # f-string 내부의 인용 부호 수정
-        with st.expander(label=f"{history_df_de.loc[i, 'date']} : {history_df_de.loc[i, 'overall_summary']}"):
-            st.metric(label="학업 스트레스 총점", value= f"{history_df_de.loc[i, 'average_score']:.2f}", )
-
-            summary = history_df_de.loc[i, 'summary']
-            summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
-
-            # 스트레스 원인
-            st.markdown("### 스트레스 원인")
-            stressor = summary_list[0].split(':')[0].strip()
-            stressor_explain = summary_list[0].split(':')[1].strip() 
-            stressor_icon = stressor_icons.get(stressor, '👌')
-            st.write(f"{stressor_icon} {stressor}")
-            st.write(f"{stressor_explain}")
-
-            # 스트레스 증상
-            st.markdown("### 스트레스 증상")
-            symptom = summary_list[1].split(':')[0].strip()
-            symptom_explain = summary_list[1].split(':')[1].strip() 
-            symptom_icon = symptoms_icons.get(symptom, '👌')
-            st.write(f"{symptom_icon} {symptom}")
-            st.write(f"{symptom_explain}")
-
-            # 스트레스 대처 전략 정보
-            st.markdown("### 스트레스 대처 전략")
-            coping = summary_list[2].split(':')[0].strip()
-            coping_explain = summary_list[2].split(':')[1].strip() 
-            coping_icon = coping_icons.get(coping, '👌')
-            st.write(f"{coping_icon} {coping}")
-            st.write(f"{coping_explain}")
-
     selected_date = st.selectbox(
         "측정 날짜", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
     )
