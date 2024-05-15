@@ -39,7 +39,11 @@ with st.spinner('딱 10초만 기다려주세요!'):
     message_holder = st.empty()
     message_holder.markdown("#")
     message_holder.markdown("#")
-spinner_text(0)
+
+st.subheader("기다리는 동안 흥미로운 사실들을 알려드립니다 🤓")
+
+for i in range(10):
+    spinner_text(i)
 
 ########################################################################################
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
