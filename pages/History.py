@@ -120,7 +120,7 @@ else:
             st.write(f"{coping_explain}")
 
     selected_date = st.selectbox(
-        "측정 날짜", history_df_de['date']
+        "측정 날짜", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
     )
 
     # 같은 날 여러번 측정한 경우, 가장 최신 기록만 보여주도록 설정
