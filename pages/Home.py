@@ -56,83 +56,83 @@ history_df = df[(df['user_name'] == user_name) &
 history_df_de = history_df.sort_values(by='date', ascending=False)
 history_df_de.reset_index(drop=True, inplace=True)
 
-# summary: 가장 최신 날짜 summary (string), summary_list: 가장 최신 날짜 증상/원인/대처전략 (list)
-summary = history_df_de.loc[0, 'summary']
-summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
-
-### USER DATA
-average_score = history_df_de.loc[0, 'average_score']
-percentile = history_df_de.loc[0, 'percentile']
-
-# 가장 최신 날짜 summary define
-stressor = summary_list[0].split(':')[0].strip()
-stressor_explain = summary_list[0].split(':')[1].strip() 
-stressor_icon = stressor_icons.get(stressor, '👌')
-
-symptom = summary_list[1].split(':')[0].strip()
-symptom_explain = summary_list[1].split(':')[1].strip() 
-symptom_icon = symptoms_icons.get(symptom, '👌')
-
-coping = summary_list[2].split(':')[0].strip()
-coping_explain = summary_list[2].split(':')[1].strip() 
-coping_icon = coping_icons.get(coping, '👌')
-
-
-data_empty = False
 if len(history_df) == 0:
-    data_empty = True
+    st.image('./images/nulldata.png')
+
+else:
+
+    # summary: 가장 최신 날짜 summary (string), summary_list: 가장 최신 날짜 증상/원인/대처전략 (list)
+    summary = history_df_de.loc[0, 'summary']
+    summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
+
+    ### USER DATA
+    average_score = history_df_de.loc[0, 'average_score']
+    percentile = history_df_de.loc[0, 'percentile']
+
+    # 가장 최신 날짜 summary define
+    stressor = summary_list[0].split(':')[0].strip()
+    stressor_explain = summary_list[0].split(':')[1].strip() 
+    stressor_icon = stressor_icons.get(stressor, '👌')
+
+    symptom = summary_list[1].split(':')[0].strip()
+    symptom_explain = summary_list[1].split(':')[1].strip() 
+    symptom_icon = symptoms_icons.get(symptom, '👌')
+
+    coping = summary_list[2].split(':')[0].strip()
+    coping_explain = summary_list[2].split(':')[1].strip() 
+    coping_icon = coping_icons.get(coping, '👌')
 
 
-# 정석대로 하면.. score_ranges = [1.94, 3.09, 3.72, 4.39, 4.92, 5.0]
-score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
-range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조금지쳐", "폭발직전"]
+    # 정석대로 하면.. score_ranges = [1.94, 3.09, 3.72, 4.39, 4.92, 5.0]
+    score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
+    range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조금지쳐", "폭발직전"]
 
 
-########################################################################################
+    ########################################################################################
 
-st.markdown("# 학업 스트레스 측정 요약")
-with st.container(border=True):
-    st.subheader("학업 스트레스 수치")
-    
-    # 데이터프레임을 Altair에 맞게 변환
-    base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
-        x='date:T',
-        y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
-        color=alt.value("#000000")
-    )
+    st.markdown("# 학업 스트레스 측정 요약")
+    with st.container(border=True):
+        st.subheader("학업 스트레스 수치")
+        
+        # 데이터프레임을 Altair에 맞게 변환
+        base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+            x='date:T',
+            y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
+            color=alt.value("#000000")
+        )
 
-    # 구간별 척도 가로선 추가
-    rule_data = pd.DataFrame({
-        '학업 스트레스 단계': score_ranges,
-        '구간': range_labels, 
-        '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+        # 구간별 척도 가로선 추가
+        rule_data = pd.DataFrame({
+            '학업 스트레스 단계': score_ranges,
+            '구간': range_labels, 
+            '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
 
-    })
+        })
 
-    rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
-        y='학업 스트레스 단계:Q',
-        color=alt.Color('색상:N', scale=None)
-    )
+        rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+            y='학업 스트레스 단계:Q',
+            color=alt.Color('색상:N', scale=None)
+        )
 
-    final_chart = base_chart + rule_chart 
+        final_chart = base_chart + rule_chart 
 
-    st.altair_chart(final_chart, use_container_width=True)
-    st.image('./images/스트레스 수치/스트레스5단계.png')
+        st.altair_chart(final_chart, use_container_width=True)
+        st.image('./images/스트레스 수치/스트레스5단계.png')
 
 
-with st.container():
-    st.subheader(f"가장 최근에 측정한 ({history_df_de.loc[0, 'date']}) 학업 스트레스")
+    with st.container():
+        st.subheader(f"가장 최근에 측정한 ({history_df_de.loc[0, 'date']}) 학업 스트레스")
 
-    # 스트레스 원인
-    cols = st.columns(3)
-    with st.expander(f"학업 스트레스의 원인: {stressor_icon} {stressor}"):
-        st.write(stressor_explain)
-    
-    with st.expander(f"학업 스트레스의 증상: {symptom_icon} {symptom}"):
-        st.write(symptom_explain)
-    
-    with st.expander(f"학업 스트레스의 대처 전략: {coping_icon} {coping}"):
-        st.write(coping_explain)
+        # 스트레스 원인
+        cols = st.columns(3)
+        with st.expander(f"학업 스트레스의 원인: {stressor_icon} {stressor}"):
+            st.write(stressor_explain)
+        
+        with st.expander(f"학업 스트레스의 증상: {symptom_icon} {symptom}"):
+            st.write(symptom_explain)
+        
+        with st.expander(f"학업 스트레스의 대처 전략: {coping_icon} {coping}"):
+            st.write(coping_explain)
 
 st.write("#")
 if st.button(":left_speech_bubble:   모니와 대화하며 \n :red[**새로운 학업 스트레스 측정**하기]",
