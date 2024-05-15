@@ -96,7 +96,7 @@ else:
         
         # 데이터프레임을 Altair에 맞게 변환
         base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
-            x='date:T',
+            x=alt.X('date:T', title="날짜"),
             y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
             color=alt.value("#000000")
         )
