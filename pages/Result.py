@@ -120,6 +120,11 @@ else:
                         legend_title='범례')
         st.plotly_chart(fig, use_container_width=True)
 
+        score_img_list = ["고민이모니", "이정도는", "인생이", "조금지쳐", "폭발직전"]
+        
+        score_img_path = f"./images/스트레스 수치/스트레스_{score_img_list[score_classification(average_score)]}.png"
+        st.image(score_img_path)
+
         # st.subheader("학업 스트레스 점수 추이")
         
         # # 데이터프레임을 Altair에 맞게 변환

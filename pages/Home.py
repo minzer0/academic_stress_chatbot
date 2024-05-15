@@ -92,7 +92,7 @@ else:
 
     st.markdown("# 학업 스트레스 측정 요약")
     with st.container(border=True):
-        st.subheader("학업 스트레스 수치")
+        st.subheader("학업 스트레스 점수 추이")
         
         # 데이터프레임을 Altair에 맞게 변환
         base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
