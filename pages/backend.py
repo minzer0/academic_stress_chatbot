@@ -15,17 +15,11 @@ with open("./.streamlit/style.css") as css:
     # CSS 파일을 읽어와서 스타일 적용
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
-st.title("결과 분석 중입니다...🔍\n")
-with st.spinner('딱 10초만 기다려주세요!'):
-    time.sleep(10)
-st.write("#")
-
-st.subheader("기다리시는 동안 흥미로운 사실들을 알려드립니다 🤓")
-
 # 메시지를 담고 있는 리스트
 waiting_list = ["팀 유박사는 유다나 박민영 사랑해라는 뜻입니다 ❤️", "고민모니라는 이름은 ChatGPT가 지어줬습니다 😎", 
                 "상상관 4층에는 곱등이가 산다는 소문이 있습니다 😮", "인공지능응용학과 만세! 최고! 😍",
                 "유박사 팀은 이번 여름에 학사 졸업합니다 🎉"]
+
 
 def spinner_text(i):
     message_ui = f"<div style='text-align: center; font-size: 20px; font-weight: bold;'> {waiting_list[i]} </div>"
@@ -36,17 +30,23 @@ def spinner_text(i):
     if i == 0:
         st.image("./images/waiting_picture.jpg")
     time.sleep(2)
-    spinner_text((i + 1) % len(waiting_list))
 
-
-# 스피너와 함께 메시지 표시
+st.title("결과 분석 중입니다...🔍\n")
 with st.spinner('딱 10초만 기다려주세요!'):
-    # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
     message_holder = st.empty()
     message_holder.markdown("#")
     message_holder.markdown("#")
+    st.subheader("기다리시는 동안 흥미로운 사실들을 알려드립니다 🤓")
+    spinner_text(0)
 
-spinner_text(0)
+# # 스피너와 함께 메시지 표시
+# with st.spinner('딱 10초만 기다려주세요!'):
+#     # 메시지를 동적으로 업데이트하기 위한 임시 위젯 생성
+#     message_holder = st.empty()
+#     message_holder.markdown("#")
+#     message_holder.markdown("#")
+
+
 
 ########################################################################################
 st_supabase_client = st.connection("supabase",type=SupabaseConnection)
