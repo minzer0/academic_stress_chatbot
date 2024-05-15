@@ -4,5 +4,4 @@
 /* 특정 Streamlit 클래스에 대한 글씨 크기 조정 */
 [class^=st-emotion] {
     font-family: "Gowun Batang", sans-serif !important;
-    font-size: 25px; /* 글씨 크기를 20px로 설정 */
 }
