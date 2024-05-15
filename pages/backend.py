@@ -240,12 +240,19 @@ if len(context) < 10:
             st.switch_page("pages/Chatbot.py")
         st.stop()
 
+year = str(current_date.year)
+month = str(current_date.month) 
+if len(str(current_date.day)) == 1:
+    day = "0" + str(current_date.day)
+else:
+    day = str(current_date.day)
+
 st_supabase_client.table("history").insert(
             [
                 {
                     "user_id": user_id,
                     "user_name": user_name,
-                    "date": str(current_date.year) + "-" + str(current_date.month) + "-" + str(current_date.day),
+                    "date": year + "-" + month + "-" + day,
                     "average_score": average_score,
                     "percentile": percentile,
                     "summary": summary,
