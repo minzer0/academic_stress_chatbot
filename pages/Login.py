@@ -33,10 +33,13 @@ with st.container(border=True):
             
             if supabase_response is not None:
             
-                if "user_id" not in st.session_state:
-                    st.session_state["user_id"] = supabase_response.user.id
-                if "user_metadata" not in st.session_state:
-                    st.session_state["user_metadata"] = supabase_response.user.user_metadata
+                # if "user_id" not in st.session_state:
+                #     st.session_state["user_id"] = supabase_response.user.id
+                # if "user_metadata" not in st.session_state:
+                #     st.session_state["user_metadata"] = supabase_response.user.user_metadata
+
+                st.session_state["user_id"] = supabase_response.user.id
+                st.session_state["user_metadata"] = supabase_response.user.user_metadata
                     
                 st.switch_page("pages/Home.py")
 
