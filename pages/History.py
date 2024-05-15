@@ -85,10 +85,10 @@ else:
     #     st.image('./images/스트레스 수치/스트레스5단계.png')
 
     # # 리포트 탭
-    # st.subheader("날짜별 상세 결과 확인하기")
+    st.subheader("날짜별 상세 결과 확인하기")
 
     selected_date = st.selectbox(
-        "날짜별 상세 결과 확인하기", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
+        "날짜 선택", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
     )
 
     part_idx = history_df_de.index[(history_df_de['date'] + " : " + history_df_de['overall_summary'])== selected_date]
