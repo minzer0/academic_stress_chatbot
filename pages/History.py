@@ -146,8 +146,10 @@ else:
         st.image(score_img_path)
 
     with st.container():
-        part_summary = history_df_de.loc[part_idx, 'summary']
-        part_summary_list = [sentence.strip() for sentence in part_summary.split('\n') if sentence]
+        for part_summary in history_df_de.loc[part_idx, 'summary']:
+            part_summary_list = [sentence.strip() for sentence in part_summary.split('\n') if sentence]
+        # part_summary = history_df_de.loc[part_idx, 'summary']
+        # part_summary_list = [sentence.strip() for sentence in part_summary.split('\n') if sentence]
         part_stressor = part_summary_list[0].split(':')[0].strip()
         part_stressor_explain = part_summary_list[0].split(':')[1].strip() 
         part_stressor_icon = stressor_icons.get(part_stressor, '👌')
