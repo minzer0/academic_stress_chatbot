@@ -48,7 +48,6 @@ if len(filtered_df) == 0:
     st.image('./images/nulldata3.png')
     if st.button("모니와 대화하러 가기"):
         st.switch_page("pages/Chatbot.py")
-    st.stop()
 
 else: 
 
