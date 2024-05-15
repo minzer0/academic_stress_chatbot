@@ -82,7 +82,7 @@ else:
     
     st.markdown("# 학업 스트레스 측정 결과")          
     with st.container(border=True):
-        st.subheader("학업 스트레스 수치 비교")
+        st.subheader("학업 스트레스 점수 확인")
         # 평탄화된 리스트 생성
         summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
         # 사용자 학업 스트레스 점수와 해당 구간의 사람 수 표시
@@ -148,26 +148,26 @@ else:
         # st.image('./images/스트레스 수치/스트레스5단계.png')
     
     # 스트레스 원인 정보
-    st.markdown("### 스트레스 원인")
     stressor = summary_list[0].split(':')[0].strip()
     stressor_explain = summary_list[0].split(':')[1].strip() 
     stressor_icon = stressor_icons.get(stressor, '👌')
-    st.write(f"{stressor_icon} {stressor}")
+    st.markdown(f"### 스트레스 원인: {stressor_icon} {stressor}")
+    # st.write(f"{stressor_icon} {stressor}")
     st.write(f"{stressor_explain}")
 
 # 스트레스 증상
-    st.markdown("### 스트레스 증상")
     symptom = summary_list[1].split(':')[0].strip()
     symptom_explain = summary_list[1].split(':')[1].strip() 
     symptom_icon = symptoms_icons.get(symptom, '👌')
+    st.markdown("### 스트레스 증상")
     st.write(f"{symptom_icon} {symptom}")
     st.write(f"{symptom_explain}")
 
     # 스트레스 대처 전략 정보
-    st.markdown("### 스트레스 대처 전략")
     coping = summary_list[2].split(':')[0].strip()
     coping_explain = summary_list[2].split(':')[1].strip() 
     coping_icon = coping_icons.get(coping, '👌')
+    st.markdown("### 스트레스 대처 전략")
     st.write(f"{coping_icon} {coping}")
     st.write(f"{coping_explain}")
 
