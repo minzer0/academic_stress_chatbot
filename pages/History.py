@@ -55,85 +55,130 @@ if len(history_df) == 0:
     st.image('./images/nulldata2.png')
 
 else: 
-    selected_date = st.selectbox(
-        "측정 날짜", history_df_de['date']
-    )
+    # 탭을 사용할 경우 (간단한 탭 구현)
+    tabs = st.tabs(["점수 추이", "대화별 상세 내역"])
 
-    # 같은 날 여러번 측정한 경우, 가장 최신 기록만 보여주도록 설정
-    part_idx = history_df_de.index[history_df_de["date"] == selected_date].tolist()[0]
-    st.subheader(f"{history_df_de.loc[part_idx, 'overall_summary']}" )
+    # 홈 탭
+    with tabs[0]:
+        st.subheader("학업 스트레스 점수 추이")
+        # 라인 차트 시각화
+        st.line_chart(history_df_as, x="날짜", y="스트레스 점수", color='#ffc8ce')
 
-    # 비교
-    with st.container(border=True):
-        part_score = history_df_de.loc[part_idx, 'average_score']
-        part_percentile = history_df_de.loc[part_idx, 'percentile']
+    # 리포트 탭
+    with tabs[1]:
+        st.subheader("대화별 상세 내역 보기")
 
-        st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
+        for i in range(len(history_df_de)):
+            # f-string 내부의 인용 부호 수정
+            with st.expander(label=f"{history_df_de.loc[i, 'date']} : {history_df_de.loc[i, 'overall_summary']}"):
+                st.metric(label="학업 스트레스 총점", value= f"{history_df_de.loc[i, 'average_score']:.2f}", )
+
+                summary = history_df_de.loc[i, 'summary']
+                summary_list = [sentence.strip() for sentence in summary.split('\n') if sentence]
+
+                # 스트레스 원인
+                st.markdown("### 스트레스 원인")
+                stressor = summary_list[0].split(':')[0].strip()
+                stressor_explain = summary_list[0].split(':')[1].strip() 
+                stressor_icon = stressor_icons.get(stressor, '👌')
+                st.write(f"{stressor_icon} {stressor}")
+                st.write(f"{stressor_explain}")
+
+                # 스트레스 증상
+                st.markdown("### 스트레스 증상")
+                symptom = summary_list[1].split(':')[0].strip()
+                symptom_explain = summary_list[1].split(':')[1].strip() 
+                symptom_icon = symptoms_icons.get(symptom, '👌')
+                st.write(f"{symptom_icon} {symptom}")
+                st.write(f"{symptom_explain}")
+
+                # 스트레스 대처 전략 정보
+                st.markdown("### 스트레스 대처 전략")
+                coping = summary_list[2].split(':')[0].strip()
+                coping_explain = summary_list[2].split(':')[1].strip() 
+                coping_icon = coping_icons.get(coping, '👌')
+                st.write(f"{coping_icon} {coping}")
+                st.write(f"{coping_explain}")
+
+    # selected_date = st.selectbox(
+    #     "측정 날짜", history_df_de['date']
+    # )
+
+    # # 같은 날 여러번 측정한 경우, 가장 최신 기록만 보여주도록 설정
+    # part_idx = history_df_de.index[history_df_de["date"] == selected_date].tolist()[0]
+    # st.subheader(f"{history_df_de.loc[part_idx, 'overall_summary']}" )
+
+    # # 비교
+    # with st.container(border=True):
+    #     part_score = history_df_de.loc[part_idx, 'average_score']
+    #     part_percentile = history_df_de.loc[part_idx, 'percentile']
+
+    #     st.write(f"{user_name}님의 점수는 **{part_score:.1f}**/5.0으로, 100명 중 스트레스가 **{part_percentile:.1f}번째로** 많아요.")
                 
-        def score_classification(score):
-            for idx, upper_bound in enumerate(score_ranges):
-                if score <= upper_bound:
-                    return idx
+    #     def score_classification(score):
+    #         for idx, upper_bound in enumerate(score_ranges):
+    #             if score <= upper_bound:
+    #                 return idx
                 
-        # 예시 데이터 생성
-        np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
-        dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
-        mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
+    #     # 예시 데이터 생성
+    #     np.random.seed = 42  # 재현성을 위해 랜덤 시드 설정
+    #     dummy_scores = np.random.normal(3.773399014778325, 0.9273521676028207, 1000)
+    #     mu, std = np.mean(dummy_scores), np.std(dummy_scores)  # 평균과 표준편차 계산
 
-        # PDF 그래프 생성
-        x = np.linspace(min(dummy_scores), max(dummy_scores), 100)
-        y = norm.pdf(x, mu, std)  # 확률밀도함수
+    #     # PDF 그래프 생성
+    #     x = np.linspace(min(dummy_scores), max(dummy_scores), 100)
+    #     y = norm.pdf(x, mu, std)  # 확률밀도함수
 
-        # Plotly 그래프 생성
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='확률밀도함수', line=dict(color='grey')))
+    #     # Plotly 그래프 생성
+    #     fig = go.Figure()
+    #     fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name='확률밀도함수', line=dict(color='grey')))
 
-        # 사용자 점수 주변 영역 강조
-        score_min = part_score - 0.2
-        score_max = part_score + 0.2
-        x_fill = np.linspace(score_min, score_max, 100)
-        y_fill = norm.pdf(x_fill, mu, std)
+    #     # 사용자 점수 주변 영역 강조
+    #     score_min = part_score - 0.2
+    #     score_max = part_score + 0.2
+    #     x_fill = np.linspace(score_min, score_max, 100)
+    #     y_fill = norm.pdf(x_fill, mu, std)
 
 
-        stress_color = ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+    #     stress_color = ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
 
-        part_color = stress_color[score_classification(part_score)]
-        fig.add_trace(go.Scatter(x=x_fill, y=y_fill, fill='tozeroy', mode='none', name='당신의 스트레스 수치',
-                                fillcolor=part_color, opacity=0.3))
+    #     part_color = stress_color[score_classification(part_score)]
+    #     fig.add_trace(go.Scatter(x=x_fill, y=y_fill, fill='tozeroy', mode='none', name='당신의 스트레스 수치',
+    #                             fillcolor=part_color, opacity=0.3))
 
-        fig.update_layout(title='학업 스트레스 점수의 PDF',
-                        xaxis_title='학업 스트레스 점수',
-                        yaxis_title='확률밀도함수',
-                        legend_title='범례')
-        st.plotly_chart(fig, use_container_width=True)
+    #     fig.update_layout(title='학업 스트레스 점수의 PDF',
+    #                     xaxis_title='학업 스트레스 점수',
+    #                     yaxis_title='확률밀도함수',
+    #                     legend_title='범례')
+    #     st.plotly_chart(fig, use_container_width=True)
 
-        score_img_list = ["고민이모니", "이정도는", "인생이", "조금지쳐", "폭발직전"]
+    #     score_img_list = ["고민이모니", "이정도는", "인생이", "조금지쳐", "폭발직전"]
         
-        score_img_path = f"./images/스트레스 수치/스트레스_{score_img_list[score_classification(part_score)]}.png"
-        st.image(score_img_path)
+    #     score_img_path = f"./images/스트레스 수치/스트레스_{score_img_list[score_classification(part_score)]}.png"
+    #     st.image(score_img_path)
 
-    with st.container():
-        part_summary = history_df_de.loc[part_idx, 'summary']
-        part_summary_list = [sentence.strip() for sentence in part_summary.split('\n') if sentence]
-        part_stressor = part_summary_list[0].split(':')[0].strip()
-        part_stressor_explain = part_summary_list[0].split(':')[1].strip() 
-        part_stressor_icon = stressor_icons.get(part_stressor, '👌')
+    # with st.container():
+    #     part_summary = history_df_de.loc[part_idx, 'summary']
+    #     part_summary_list = [sentence.strip() for sentence in part_summary.split('\n') if sentence]
+    #     part_stressor = part_summary_list[0].split(':')[0].strip()
+    #     part_stressor_explain = part_summary_list[0].split(':')[1].strip() 
+    #     part_stressor_icon = stressor_icons.get(part_stressor, '👌')
 
-        part_symptom = part_summary_list[1].split(':')[0].strip()
-        part_symptom_explain = part_summary_list[1].split(':')[1].strip() 
-        part_symptom_icon = symptoms_icons.get(part_symptom, '👌')
+    #     part_symptom = part_summary_list[1].split(':')[0].strip()
+    #     part_symptom_explain = part_summary_list[1].split(':')[1].strip() 
+    #     part_symptom_icon = symptoms_icons.get(part_symptom, '👌')
 
-        part_coping = part_summary_list[2].split(':')[0].strip()
-        part_coping_explain = part_summary_list[2].split(':')[1].strip() 
-        part_coping_icon = coping_icons.get(part_coping, '👌')
+    #     part_coping = part_summary_list[2].split(':')[0].strip()
+    #     part_coping_explain = part_summary_list[2].split(':')[1].strip() 
+    #     part_coping_icon = coping_icons.get(part_coping, '👌')
 
-        with st.expander(f"학업 스트레스의 원인: {part_stressor_icon} {part_stressor}"):
-            st.write(part_stressor_explain)
+    #     with st.expander(f"학업 스트레스의 원인: {part_stressor_icon} {part_stressor}"):
+    #         st.write(part_stressor_explain)
         
-        with st.expander(f"학업 스트레스의 증상: {part_symptom_icon} {part_symptom}"):
-            st.write(part_symptom_explain)
+    #     with st.expander(f"학업 스트레스의 증상: {part_symptom_icon} {part_symptom}"):
+    #         st.write(part_symptom_explain)
         
-        with st.expander(f"학업 스트레스의 대처 전략: {part_coping_icon} {part_coping}"):
-            st.write(part_coping_explain)
+    #     with st.expander(f"학업 스트레스의 대처 전략: {part_coping_icon} {part_coping}"):
+    #         st.write(part_coping_explain)
 
 menu()
