@@ -130,9 +130,11 @@ def get_scores(context):
     Below is the conversation between 'User' and 'AI':
     {context}
 
-    Your response should be formatted as follows, with each item's respective score, except for those whose score is 0:
+    Your response should be formatted as follows, with each item's respective score(0~5), except for those whose score is 0:
     1, 5, 3, 4, 2, ...
-    (You must return only numbers and commas. No texts!!) 
+
+    You must return only numbers and commas. No texts!! 
+    Don't forget to exclude the scores of items that were not mentioned in the conversation, which should be scored as 0.
     """
 
     completion = client.chat.completions.create(
