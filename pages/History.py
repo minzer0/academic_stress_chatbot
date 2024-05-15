@@ -8,6 +8,7 @@ import numpy as np
 from scipy.stats import norm
 
 from datetime import datetime
+import altair as alt
 from st_supabase_connection import SupabaseConnection
 import pandas as pd
 import plotly.graph_objects as go
@@ -46,7 +47,7 @@ history_df_as.reset_index(drop=True, inplace=True)
 history_df_de = history_df.sort_values(by='date', ascending=False)
 history_df_de.reset_index(drop=True, inplace=True)
 score_ranges = [1.94, 3.09, 3.72, 4.39, 5.0]
-
+range_labels = ["고민이모니", "이정도는OK", "인생이힘드니", "조금지쳐", "폭발직전"]
 
 ####################################################################################
 st.title("이전 결과 확인")
@@ -62,7 +63,33 @@ else:
     with tabs[0]:
         st.subheader("학업 스트레스 점수 추이")
         # 라인 차트 시각화
-        st.line_chart(history_df_as, x="날짜", y="스트레스 점수", color='#ffc8ce')
+        with st.container(border=True):
+            st.subheader("학업 스트레스 수치")
+            
+            # 데이터프레임을 Altair에 맞게 변환
+            base_chart = alt.Chart(history_df_de).mark_line(point=True).encode(
+                x='date:T',
+                y=alt.Y('average_score:Q', scale=alt.Scale(domain=[0.5, 5.5]), title="학업 스트레스 수치"),
+                color=alt.value("#000000")
+            )
+
+            # 구간별 척도 가로선 추가
+            rule_data = pd.DataFrame({
+                '학업 스트레스 단계': score_ranges,
+                '구간': range_labels, 
+                '색상': ['#277da1', '#90be6d', '#f9c74f', '#f8961e', '#f94144']  # 각 구간에 대해 다른 색상 지정
+
+            })
+
+            rule_chart = alt.Chart(rule_data).mark_rule(strokeDash=[5, 3]).encode(
+                y='학업 스트레스 단계:Q',
+                color=alt.Color('색상:N', scale=None)
+            )
+
+            final_chart = base_chart + rule_chart 
+
+            st.altair_chart(final_chart, use_container_width=True)
+            st.image('./images/스트레스 수치/스트레스5단계.png')
 
     # 리포트 탭
     with tabs[1]:
