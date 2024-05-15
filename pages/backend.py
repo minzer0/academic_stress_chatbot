@@ -136,7 +136,7 @@ def get_scores(context):
     """
 
     completion = client.chat.completions.create(
-        model="gpt-4-0125-preview",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
         ],
@@ -181,7 +181,7 @@ def summary(context):
     """
 
     completion = client.chat.completions.create(
-        model="gpt-4-0125-preview",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
         ],
@@ -207,7 +207,7 @@ def overall_summary(context):
     """
 
     completion = client.chat.completions.create(
-        model="gpt-4-0125-preview",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
         ],

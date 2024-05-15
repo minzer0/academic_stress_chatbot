@@ -121,7 +121,7 @@ with st.container(border=True):
 
 
 with st.container():
-    st.subheader(f"가장 최근에 측정한 ({history_df_de.loc[0, 'date']}) 학업 스트레스의...")
+    st.subheader(f"가장 최근에 측정한 ({history_df_de.loc[0, 'date']}) 학업 스트레스")
 
     # 스트레스 원인
     cols = st.columns(3)

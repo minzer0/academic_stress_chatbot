@@ -40,7 +40,7 @@ if main_button:
 
 # Set a default model
 if "openai_model" not in st.session_state:    
-    st.session_state["openai_model"] = "gpt-4-0125-preview"
+    st.session_state["openai_model"] = "gpt-4o"
 
 
 # Set OpenAI API key 
