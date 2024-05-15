@@ -1,15 +1,10 @@
 import streamlit as st
-import numpy as np
 import altair as alt
 import pandas as pd
 from datetime import datetime
 from st_supabase_connection import SupabaseConnection
 
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
 from function.menu import menu
-import pages.Profile as pg
-import matplotlib.font_manager as fm
 
 from function.result_dictionary import stressor_icons
 from function.result_dictionary import symptoms_icons
