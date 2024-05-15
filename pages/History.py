@@ -88,7 +88,7 @@ else:
     st.subheader("날짜별 상세 결과 확인하기")
 
     selected_date = st.selectbox(
-        "측정 날짜", (history_df_de['date'] + " : " + history_df_de['overall_summary'])
+        (history_df_de['date'] + " : " + history_df_de['overall_summary'])
     )
 
     part_idx = history_df_de.index[(history_df_de['date'] + " : " + history_df_de['overall_summary'])== selected_date]
