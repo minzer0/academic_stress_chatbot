@@ -85,7 +85,7 @@ else:
         st.image('./images/스트레스 수치/스트레스5단계.png')
 
     # 리포트 탭
-    st.subheader("대화별 상세 내역 보기")
+    st.subheader("날짜별 상세 결과 확인하기")
 
     for i in range(len(history_df_de)):
         # f-string 내부의 인용 부호 수정
